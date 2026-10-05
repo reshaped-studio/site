@@ -7,4 +7,4 @@ model: inherit
 <!-- many-hats -->
 
 Follow the canonical definition in `many-hats/agents/ledger.md`.
-Load only the skills that the request activates. Many Hats skills and any ReShaped method skills are both in `.agents/skills/`.
+Load only the skills that the request activates. Many Hats skills and Design Dash skills are both in `.agents/skills/`.

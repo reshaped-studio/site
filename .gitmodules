@@ -1,3 +1,6 @@
 [submodule "many-hats"]
 	path = many-hats
 	url = https://github.com/reshaped-studio/many-hats.git
+[submodule "design-dash"]
+	path = design-dash
+	url = https://github.com/reshaped-studio/design-dash.git
