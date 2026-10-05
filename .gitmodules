@@ -1,0 +1,3 @@
+[submodule "many-hats"]
+	path = many-hats
+	url = https://github.com/reshaped-studio/many-hats.git

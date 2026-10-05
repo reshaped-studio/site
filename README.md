@@ -13,3 +13,5 @@ npm run serve
 ```
 
 Brand reviews and direction notes are in the private `studio` repository, under `brand/`.
+
+This repo includes the shared [Many Hats](https://github.com/reshaped-studio/many-hats) team as a submodule. Clone with `--recurse-submodules`. `AGENTS.md` points at it.
