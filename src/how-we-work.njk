@@ -1,0 +1,149 @@
+---
+title: "reshaped · how we work"
+permalink: /how-we-work/
+pageClass: page--how-we-work
+navKey: how-we-work
+sheetIndex: "02"
+description: "The long version of how ReShaped works. Structure before surface, force-rank then redesign, ship running software not a deck. Read it if you are deciding whether to bring us in."
+eleventyExcludeFromCollections: true
+---
+{% extends "base.njk" %}
+
+{#
+  How we work · v3 · Metro long-form reader
+  Copy: ../landing-copy-v1.md section 2 (2.1 - 2.8) v2.0 lowercase
+  Spec: ../identity-system-v3.md sections 3.2, 4.2
+  Page period color: --cyan
+#}
+
+{% block content %}
+
+<article class="reader">
+  {# 2.1 · Heading and lede #}
+  <h1>how we work.</h1>
+  <p class="reader__lede">The fast version is on the landing page. This is the long one. Read it if you are deciding whether to bring us in.</p>
+</article>
+
+<div class="section-break">
+  <span class="section-break__num">II</span>
+  <span>STRUCTURE</span>
+</div>
+
+<article class="reader">
+  {# 2.2 · structure before surface #}
+  <h2>structure before surface.</h2>
+
+  <p>Most design agencies open with a moodboard. We open with a list. It is not a pretty list. It is every object the software has to keep track of: case, client, order, invoice, shipment, whatever the domain calls them. Then we write out which objects live inside which. A shipment lives inside an order; a case belongs to a client; a permit references a parcel. That is already most of what the interface will need to show.</p>
+
+  <p>Most people assume their team already knows this. Mostly, they do not. Not because they are careless, but because the system was never written down. It was built over years, by different teams, under different deadlines, for different users. Once a product passes a certain complexity, nobody holds the whole map in their head. The first value we deliver is often the map itself.</p>
+
+  <p>The map is also what makes the redesign cheap. When you know what the objects are, you know what the screens have to be. You stop inventing new concepts. You start redistributing the ones the software already had.</p>
+</article>
+
+<div class="section-break">
+  <span class="section-break__num">III</span>
+  <span>PRIORITY</span>
+</div>
+
+<article class="reader">
+  {# 2.3 · force-rank, then redesign #}
+  <h2>force&#8209;rank, then redesign.</h2>
+
+  <p>Real products have too many actions. Every screen in a legacy system accumulates buttons the way a kitchen drawer accumulates spatulas. Some of those buttons are what the product is for. Most of them are historical. We sort them. What is primary on this object: the thing 80 percent of users do 80 percent of the time. What is secondary: done often enough to keep one click away. What is tertiary: valid, but filed behind a menu. What is quaternary: we will ask whether it still belongs.</p>
+
+  <p>Attributes get the same treatment. Forty&#8209;seven fields on a case record is not a design. It is a compromise with history. We ask which fields answer the question on the page, which fields confirm identity, which fields are metadata nobody looks at, and which fields were filled in once in 2019 and never read again.</p>
+
+  <p>Once the actions and attributes are ranked, the redesign is almost mechanical. The screens follow. The navigation follows. The boring, inevitable version of the product appears.</p>
+</article>
+
+<div class="section-break">
+  <span class="section-break__num">IV</span>
+  <span>SHIP</span>
+</div>
+
+<article class="reader">
+  {# 2.4 · running software, not a deck #}
+  <h2>running software, not a deck.</h2>
+
+  <p>We design and build the whole thing. Research. Structure. Interface. Code. No handoffs to a separate engineering vendor halfway through, because that is where the plan usually breaks. One team holds the shape of the system from interview to deploy.</p>
+
+  <p>We stay past launch. Far enough past that the software is running in production, the support team has been trained, and the first two weeks of real traffic have revealed what we got wrong. Then we document what is in place, hand the codebase over to your team, and leave on good terms.</p>
+</article>
+
+<div class="section-break">
+  <span class="section-break__num">V</span>
+  <span>TRUTH</span>
+</div>
+
+<article class="reader">
+  {# 2.5 · truth before taste #}
+  <h2>truth before taste.</h2>
+
+  <p>Taste without truth is decoration. Every redesign we have seen fail has the same cause: the team chose a visual direction before they understood what the product was. The new interface was cleaner than the old one in every measurable way and still did not work, because the structure underneath it was still wrong.</p>
+
+  <p>We flip that order. We find out what is actually in your system. Only then do we redraw it. The design decisions come second because they have to. By the time we are choosing fonts, the hard decisions are already made.</p>
+</article>
+
+<div class="section-break">
+  <span class="section-break__num">VI</span>
+  <span>WHAT WE NEED</span>
+</div>
+
+<article class="reader">
+  {# 2.6 · what we need from you #}
+  <h2>what we need from you to do good work.</h2>
+  <p class="reader__lede">Five requirements. Each is the absence of a thing that has wrecked an engagement we have seen.</p>
+
+  <ol class="needs-list--expanded">
+    <li>
+      <span class="step">01</span>
+      <h3 class="step-title">direct access to the people who make the real decisions.</h3>
+      <p class="step-body">The single biggest predictor of a good engagement is whether we can get a decision&#8209;maker on the phone when we need one. Not the person who forwards our questions upstairs. The person who can say yes or no and mean it. If the decision&#8209;making is happening three levels above our point of contact, the work bogs down and the budget runs out. We would rather walk away than get stuck in that loop.</p>
+    </li>
+    <li>
+      <span class="step">02</span>
+      <h3 class="step-title">room for discovery before design.</h3>
+      <p class="step-body">The first few weeks of any project are interviews, inventories, and maps. They do not produce screens. If leadership expects visible design progress in week two, we will either skip the structural work or we will do it and get fired for lack of progress. Neither outcome is good. A discovery phase of at least four weeks is the floor.</p>
+    </li>
+    <li>
+      <span class="step">03</span>
+      <h3 class="step-title">willingness to consolidate and remove, not just add.</h3>
+      <p class="step-body">Our work usually ships fewer features than what was there before. Fewer screens. Fewer fields. Fewer special cases. If internal politics require preserving every legacy feature and every stakeholder's favorite button, we cannot do the job you are paying us to do. Consolidation is most of the value. If it is blocked, the rest of the work gets blocked with it.</p>
+    </li>
+    <li>
+      <span class="step">04</span>
+      <h3 class="step-title">a timeline that respects structural work.</h3>
+      <p class="step-body">We can compress. We cannot compress past the interview phase. If a redesign has to ship on a fixed date and the date is not negotiable, tell us on the first call. We will be honest about whether the date is reachable and what has to get cut. We would rather scope down than ship something we will not stand behind.</p>
+    </li>
+    <li>
+      <span class="step">05</span>
+      <h3 class="step-title">domain experts we can actually talk to.</h3>
+      <p class="step-body">We are not your domain experts. You are. Object&#8209;oriented work is only as good as the conversations we can have with the people who know the domain cold. Schedule those conversations early. If the domain experts are consultants, a vendor, or behind a legal barrier we cannot get around, say so. We will tell you whether we can still do the work.</p>
+    </li>
+  </ol>
+</article>
+
+<div class="section-break">
+  <span class="section-break__num">VII</span>
+  <span>FIT</span>
+</div>
+
+<article class="reader">
+  {# 2.7 · when we are not the right fit #}
+  <h2>when we are not the right fit.</h2>
+
+  <p>We turn down most inbound inquiries. Not because the work is beneath us. Because the engagement shape is wrong for what we do.</p>
+
+  <p>If you need a fast logo and a landing page, we are too slow and too expensive. A brand studio will serve you better. If you are looking for pixel&#8209;pushing on an existing roadmap, we are too heavy in the method. A staff augmentation shop will cost less and ship faster. If the goal is visible novelty or wow factor as the primary outcome, we will disappoint you; our whole thesis is that familiar outperforms novel.</p>
+
+  <p>When we decline, we try to send the inquiry to a shop we trust. We keep a short list. Ask for it if you want the introduction.</p>
+
+  {# 2.8 · close · the manifesto line earns its place at the end #}
+  <p class="reader__close">slower than a coat of paint. the only thing that actually holds up.</p>
+
+  <p>
+    <a href="{{ site.contactAnchor | url }}" class="forward-cue">tell us where it hurts</a>
+  </p>
+</article>
+
+{% endblock %}

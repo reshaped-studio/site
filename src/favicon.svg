@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ReShaped favicon · v3 Metro
+  "r." monogram · white "r" + magenta period · ink ground.
+  Designed for legibility at 16-32px while keeping the wordmark gesture.
+  Spec: identity-system-v3.md sections 2.3 (typography) + 2.4 (wordmark).
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <rect width="32" height="32" rx="4" fill="#0F0F11"/>
+  <text x="6" y="24"
+        font-family="'Open Sans', system-ui, sans-serif"
+        font-weight="600"
+        font-size="22"
+        letter-spacing="-0.5"
+        fill="#FAFAF7">r</text>
+  <text x="17" y="24"
+        font-family="'Open Sans', system-ui, sans-serif"
+        font-weight="800"
+        font-size="22"
+        fill="#E6007E">.</text>
+</svg>

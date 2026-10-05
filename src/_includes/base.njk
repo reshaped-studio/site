@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+{#
+  ReShaped · v3 base layout · Metro direction
+  Spec: ../../identity-system-v3.md (canonical)
+  Foundation: ../../brand-foundation-v2.md (unchanged)
+  Copy: ../../landing-copy-v1.md v2.0 (Metro lowercase)
+
+  Pages extend this with {% extends "base.njk" %} and supply a {% block content %}.
+  Front-matter contributes:
+    title         · <title> tag content
+    pageClass     · body class for period-color rotation (page--landing, etc.)
+    navKey        · which nav item gets .is-active
+    sheetIndex    · the "01" in "01 / 04" sheet stamp
+#}
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ title | safe }}</title>
+
+{# Per-page description, falling back to the site default. #}
+{%- set pageDescription = description or site.description %}
+<meta name="description" content="{{ pageDescription }}">
+
+{# Theme color (browser address-bar tint where supported). Magenta brand. #}
+<meta name="theme-color" content="{{ site.themeColor }}">
+
+{# Canonical URL. Uses the site URL + page URL with pathPrefix applied. #}
+<link rel="canonical" href="{{ site.url }}{{ page.url | url }}">
+
+{# Favicon family (spec: "r." monogram, white on dark, magenta period). #}
+<link rel="icon" type="image/svg+xml" href="{{ '/favicon.svg' | url }}">
+<link rel="apple-touch-icon" href="{{ '/apple-touch-icon.png' | url }}">
+
+{# Open Graph / Twitter card. The OG image is a 1200x630 dark Metro
+   composition; the same image works for both surfaces. #}
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ title | safe }}">
+<meta property="og:description" content="{{ pageDescription }}">
+<meta property="og:url" content="{{ site.url }}{{ page.url | url }}">
+<meta property="og:image" content="{{ site.url }}{{ site.ogImage | url }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="ReShaped">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ title | safe }}">
+<meta name="twitter:description" content="{{ pageDescription }}">
+<meta name="twitter:image" content="{{ site.url }}{{ site.ogImage | url }}">
+
+{# Fonts + stylesheet. #}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ '/css/styles.css' | url }}">
+</head>
+<body class="{{ pageClass }}">
+
+<div class="sheet">
+
+  {# ── Header ───────────────────────────────────────────────────── #}
+  <header class="sheet__header">
+    {#
+      Wordmark "reshaped." with the colored period. Body of the
+      wordmark is white on dark, ink on print. Period color cycles
+      per page via the .page--* class on body driving --page-period.
+      Defense (spec 2.4): the period is the pause that lets the brand
+      finish its sentence. Without the period, "reshaped" reads as a
+      verb being done to something. With the period, it reads as a
+      settled fact.
+    #}
+    <a href="{{ '/' | url }}" class="brand">{{ site.brandmark }}</a>
+    <div></div>
+    <nav class="sheet__nav" aria-label="Primary">
+      {%- for item in site.nav %}
+        {%- set itemUrl = item.url | url %}
+        <a href="{{ itemUrl }}"
+           {% if item.key == navKey %}class="is-active" aria-current="page"{% endif %}>{{ item.label }}</a>
+      {%- endfor %}
+    </nav>
+    <span class="sheet__stamp">{{ sheetIndex or "01" }} / {{ site.publicPageCount }}</span>
+    <div class="sheet__rule" role="presentation"></div>
+  </header>
+
+  {# ── Body ─────────────────────────────────────────────────────── #}
+  <main class="sheet__body">
+    {% block content %}{% endblock %}
+  </main>
+
+  {# ── CTA bar (full-bleed magenta, system-wide) ────────────────── #}
+  <footer class="cta-bar">
+    <span class="cta-bar__sheet">{{ sheetIndex or "01" }} / {{ site.publicPageCount }}</span>
+    <span class="cta-bar__label">for: legacy systems &middot; internal tools &middot; public&#8209;sector interfaces</span>
+    <a href="{{ site.contactAnchor | url }}">tell us where it hurts</a>
+  </footer>
+
+</div>
+
+</body>
+</html>

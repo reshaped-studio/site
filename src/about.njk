@@ -1,0 +1,108 @@
+---
+title: "reshaped · about"
+permalink: /about/
+pageClass: page--about
+navKey: about
+sheetIndex: "03"
+description: "ReShaped is a small, deliberate practice. Founded by Aaron Benjamin. Built around object-oriented UX, a method older than the practice. Two engagements at a time, sometimes three."
+eleventyExcludeFromCollections: true
+---
+{% extends "base.njk" %}
+
+{#
+  About · v3 · Metro long-form reader
+  Copy: ../landing-copy-v1.md section 3 (3.1 - 3.7) v2.0 lowercase
+  Spec: ../identity-system-v3.md sections 3.2, 4.2
+  Page period color: --lime
+#}
+
+{% block content %}
+
+<article class="reader">
+  {# 3.1 · Heading and lede #}
+  <h1>about reshaped.</h1>
+  <p class="reader__lede">A small, deliberate practice. Founded by one person. Built around a method that is older than the practice.</p>
+</article>
+
+<div class="section-break">
+  <span class="section-break__num">II</span>
+  <span>WHO WORKS HERE</span>
+</div>
+
+<article class="reader">
+  {# 3.2 · one person, for now #}
+  <h2>one person, for now.</h2>
+
+  <p>ReShaped is led by Aaron Benjamin. Most of the work on a given engagement is his, hands on the keyboard, sitting in the interviews, drawing the object map. When a project warrants more hands, the bench is a small group of designers and engineers we have worked with for years. The bench joins on a project basis, named on the engagement, and leaves when the work is done. It is not a marketplace and it is not a hidden subcontractor pool.</p>
+
+  <p>The shape is deliberate. The kind of work we do does not scale by adding bodies. It scales by the lead practitioner holding the whole system in their head. Two practitioners can hold it. Twenty cannot. We will grow when growth makes the work better, not when growth would just add overhead.</p>
+</article>
+
+<div class="section-break">
+  <span class="section-break__num">III</span>
+  <span>WHAT WE BELIEVE</span>
+</div>
+
+<article class="reader">
+  {# 3.3 · the method is older than the practice #}
+  <h2>the method is older than the practice.</h2>
+
+  <p>ReShaped is built around object&#8209;oriented UX, a discipline that predates this shop by more than a decade. The version we use names objects, nests them, ranks the actions that act on them, and only then designs the screens. It is a structural method. It produces interfaces that look familiar because the things behind them have been put in their right places.</p>
+
+  <p>We did not invent it. We are practitioners of it. The credit for the method goes to the people who have been writing about it and teaching it for years; we owe them a working bibliography on this site, and we will publish one when it stops being a list of bookmarks.</p>
+
+  <p>What we add is the willingness to take the method all the way through to running software. We design and build the engagement end&#8209;to&#8209;end. Most of what gets called UX work stops at the wireframe. We keep going until the codebase is in your team's hands and the support tickets have stopped repeating themselves.</p>
+</article>
+
+<div class="section-break">
+  <span class="section-break__num">IV</span>
+  <span>ORIGIN</span>
+</div>
+
+<article class="reader">
+  {# 3.4 · a long apprenticeship in messy products #}
+  <h2>a long apprenticeship in messy products.</h2>
+
+  <p>The thesis came out of a long stretch of working on software that was old, large, and important to people who had no choice but to use it. Public services. Internal tools. Field ops. Health records. The kind of products where you can watch a frontline user spend forty seconds finding the button and know that no amount of visual polish would have saved that interaction.</p>
+
+  <p>Every redesign that worked, in that decade of work, started by changing what the system thought it was. Every redesign that failed had the same opposite shape: a new visual language laid on top of the old structure, the old structure still wrong, the new language wearing thin within a year. The pattern was consistent enough to bet a practice on.</p>
+
+  <p>ReShaped is that bet. The shop is named after what the work does to the product, and what the work does to the product is what the failed redesigns kept failing to do.</p>
+</article>
+
+<div class="section-break">
+  <span class="section-break__num">V</span>
+  <span>WHAT WE ARE FOR</span>
+</div>
+
+<article class="reader">
+  {# 3.5 · high-complexity, low-novelty #}
+  <h2>high&#8209;complexity, low&#8209;novelty.</h2>
+
+  <p>We are built for products where the user has a job to do and the interface is in the way. Public services. Internal tools. Legacy systems. Civic tech. Health records. Things on private networks that nobody outside the org has ever seen. The reader does not need a complete list; they will know if their product fits.</p>
+
+  <p>We are not built for marketing sites, brand identity systems, consumer launches, or pitch decks. None of those are bad work. They are not what this shop is for. The how&#8209;we&#8209;work page has the longer version of this list under the heading <em>when we are not the right fit</em>; if you are unsure, that page is the place to look.</p>
+</article>
+
+<div class="section-break">
+  <span class="section-break__num">VI</span>
+  <span>CAPACITY</span>
+</div>
+
+<article class="reader">
+  {# 3.6 · capacity is small on purpose #}
+  <h2>capacity is small on purpose.</h2>
+
+  <p>We take on a small number of engagements at a time. Two, sometimes three, never more. We do this so that the lead practitioner can keep the whole system in their head for the duration of the work. It is the operating constraint that makes the method honest.</p>
+
+  <p>Practically, this means we say no to most inquiries. Sometimes we say no because the work does not fit; sometimes because the calendar does not. When the calendar is the reason, we will say so plainly and we will tell you when we expect to be free. We do not keep prospects warm in a CRM.</p>
+
+  {# 3.7 · close · the manifesto-style closing line #}
+  <p class="reader__close">same shop, same method, every engagement. that is most of what about means here.</p>
+
+  <p>
+    <a href="{{ site.contactAnchor | url }}" class="forward-cue">tell us where it hurts</a>
+  </p>
+</article>
+
+{% endblock %}

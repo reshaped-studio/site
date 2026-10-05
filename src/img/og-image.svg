@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+
+  <!-- Ground -->
+  <rect width="1200" height="630" fill="#0F0F11"/>
+
+  <!-- Hairline rule under chrome zone -->
+  <line x1="64" y1="84" x2="1136" y2="84" stroke="#2A2A30" stroke-width="1"/>
+
+  <!-- Top-left: small wordmark + dot, top-right: 01/04 stamp -->
+  <text x="64" y="60"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-weight="600" font-size="22"
+        letter-spacing="-0.3"
+        fill="#FAFAF7">reshaped</text>
+  <text x="180" y="60"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-weight="800" font-size="22"
+        fill="#E6007E">.</text>
+
+  <text x="1136" y="60" text-anchor="end"
+        font-family="'Courier New', monospace"
+        font-weight="400" font-size="13"
+        letter-spacing="2.4"
+        fill="#A4A4AC">01 / 04</text>
+
+  <!-- Section label "thesis" with cyan tick -->
+  <line x1="64" y1="172" x2="96" y2="172" stroke="#E6007E" stroke-width="1"/>
+  <text x="108" y="176"
+        font-family="'Courier New', monospace"
+        font-weight="400" font-size="13"
+        letter-spacing="2.4"
+        fill="#A4A4AC">THESIS</text>
+
+  <!-- Hero display, three-line lowercase -->
+  <text x="64" y="282"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-weight="300" font-size="92"
+        letter-spacing="-1.8"
+        fill="#FAFAF7">most software</text>
+  <text x="64" y="370"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-weight="300" font-size="92"
+        letter-spacing="-1.8"
+        fill="#FAFAF7">gets harder to use</text>
+  <text x="64" y="458"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-weight="300" font-size="92"
+        letter-spacing="-1.8"
+        fill="#FAFAF7">the longer it lives<tspan fill="#E6007E">.</tspan></text>
+
+  <!-- Subtitle / lede -->
+  <text x="64" y="528"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-weight="400" font-size="22"
+        letter-spacing="-0.3"
+        fill="#A4A4AC">end-to-end design and build for complex, ambiguous, or overgrown products.</text>
+
+  <!-- Bottom domain stamp -->
+  <line x1="64" y1="568" x2="1136" y2="568" stroke="#2A2A30" stroke-width="1"/>
+  <text x="64" y="600"
+        font-family="'Courier New', monospace"
+        font-weight="400" font-size="13"
+        letter-spacing="2"
+        fill="#A4A4AC">FOR: LEGACY SYSTEMS  ·  INTERNAL TOOLS  ·  PUBLIC-SECTOR INTERFACES</text>
+
+  <!-- Right-bottom: panorama-peek echo -->
+  <text x="1136" y="600" text-anchor="end"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-weight="300" font-size="22"
+        letter-spacing="-0.3"
+        fill="#00ADEF">02 → method.</text>
+
+</svg>
