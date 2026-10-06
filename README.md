@@ -1,10 +1,10 @@
 # Site
 
-Public website for ReShaped. Hosted at [reshaped-studio.github.io/site/](https://reshaped-studio.github.io/site/).
+Public website for ReShaped. Hosted on GitHub Pages at [reshaped.studio](https://reshaped.studio/).
 
-The Eleventy project includes the product-design landing page, its illustrated coffee-ordering timeline, and three illustrative Design Plan example pages. About and How we work describe the same Design Plan-first engagement. Contact links open an email to hello@reshaped.studio. Deployment metadata uses the GitHub Pages URL; a custom domain can be configured separately.
+The Eleventy project includes the product-design landing page, its illustrated coffee-ordering timeline, and three illustrative Design Plan example pages. About and How we work describe the same Design Plan-first engagement. Contact links open an email to hello@reshaped.studio. Deployment metadata uses the GitHub Pages URL; the custom domain is reshaped.studio.
 
-Pushes to `main` deploy through GitHub Actions after content, interaction, link, and asset checks. The workflow also supports manual deployment. Pages must use GitHub Actions as its publishing source. The build reads the host and path prefix from `actions/configure-pages`, so it supports both the project URL and a future custom domain.
+Pushes to `main` deploy through GitHub Actions after content, interaction, link, and asset checks. The workflow also supports manual deployment. Pages must use GitHub Actions as its publishing source. The build reads the host and path prefix from `actions/configure-pages`, so it supports both the project URL and its configured custom domain.
 
 ```
 npm ci
@@ -27,3 +27,7 @@ python3 scripts/verify-plan-build.py _site
 ```
 
 For a subdirectory build, set `PATH_PREFIX` and pass the same prefix as the second argument to the verifier. To create a preview whose links work directly from local files, run `python3 scripts/refresh-file-preview.py _site /absolute/preview/path`. The conversion touches generated output only.
+
+## Domain
+
+Porkbun DNS uses an apex ALIAS to `reshaped-studio.github.io` and a `www` CNAME to the same host, each with TTL 600. The previous wildcard parking record remains unchanged. GitHub Pages settings select `reshaped.studio`; configure HTTPS enforcement once GitHub issues its certificate. No CNAME file is needed for the Actions publishing source.
