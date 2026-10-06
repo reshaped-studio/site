@@ -30,4 +30,4 @@ For a subdirectory build, set `PATH_PREFIX` and pass the same prefix as the seco
 
 ## Domain
 
-Porkbun DNS uses an apex ALIAS to `reshaped-studio.github.io` and a `www` CNAME to the same host, each with TTL 600. The previous wildcard parking record remains unchanged. GitHub Pages settings select `reshaped.studio`; configure HTTPS enforcement once GitHub issues its certificate. No CNAME file is needed for the Actions publishing source.
+Porkbun DNS uses an apex ALIAS to `reshaped-studio.github.io` and a `www` CNAME to the same host, each with TTL 600. The previous wildcard parking record was removed with the owner’s approval. GitHub Pages settings select `reshaped.studio`; configure HTTPS enforcement once GitHub issues its certificate. No CNAME file is needed for the Actions publishing source.
