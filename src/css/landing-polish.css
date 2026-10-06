@@ -1,0 +1,74 @@
+/* Landing-page refinements. Motion provides pointer feedback only. */
+.page--landing {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --motion-press: 120ms;
+  --motion-feedback: 160ms;
+}
+.page--landing .sheet__body { max-width: 1440px; width: 100%; margin-inline: auto; }
+.page--landing .panorama--solo { padding-block: clamp(48px, 6vw, 88px) 64px; }
+.page--landing .display { line-height: 1.02; text-wrap: balance; }
+.page--landing .lede { max-width: 54ch; margin-block: 40px 0; text-wrap: pretty; }
+.page--landing .hero-actions { gap: 20px 32px; }
+.page--landing .hero-actions .forward-cue { margin-top: 0; min-height: 44px; align-items: center; }
+.page--landing .hero-cta { min-height: 52px; padding: 16px 24px; transition: transform var(--motion-press) var(--ease-out); }
+.page--landing .hero-cta:hover { color: var(--ink); background: var(--white); }
+.page--landing .sheet__nav a { min-height: 44px; display: inline-flex; align-items: center; transition: none; }
+.page--landing .home-block { max-width: none; padding-block: 40px 56px; }
+.page--landing .home-block__body { max-width: 62ch; text-wrap: pretty; }
+.page--landing .home-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin-top: 32px; }
+.page--landing .home-list li { padding: 20px 0 0; border-top: 1px solid var(--line); color: var(--mute); }
+.page--landing .home-list li::before { display: none; }
+.page--landing .home-list strong { display: block; margin-bottom: 12px; color: var(--white); font-weight: 500; }
+.page--landing .process-timeline { margin-top: 0; }
+.page--landing .timeline-copy p { text-wrap: pretty; }
+.page--landing .plan-gallery-grid { gap: 24px; }
+.page--landing .plan-card > a { position: relative; }
+.page--landing .plan-card > a::before { content: ''; position: absolute; inset: 0; background: var(--white); opacity: 0; pointer-events: none; }
+.page--landing .plan-card img { display: block; }
+.page--landing .plan-card h3 { margin-top: 0; font-weight: 400; }
+.page--landing .plan-card p { text-wrap: pretty; }
+.page--landing .plan-card-link > span, .page--landing .contact-email > span { display: inline-block; }
+.page--landing .forward-cue::after, .page--landing .plan-card-link > span, .page--landing .contact-email > span { transition: transform var(--motion-feedback) var(--ease-out); }
+.page--landing :is(.hero-cta, .plan-card > a, .contact-email, .forward-cue):focus-visible { outline: 2px solid var(--cyan); outline-offset: 6px; transition: none; }
+.page--landing .plan-card > a:focus-visible::before,
+.page--landing .plan-card > a:focus-visible .plan-card-link > span,
+.page--landing .contact-email:focus-visible > span,
+.page--landing .forward-cue:focus-visible::after { transition: none; transform: none; }
+.page--landing .contact { margin-top: 0; }
+.page--landing .contact__head { padding-block: 48px 40px; }
+.page--landing .contact__head h2 { text-wrap: balance; }
+
+@media (hover: hover) and (pointer: fine) {
+  .page--landing .hero-cta:hover:not(:focus-visible) { color: var(--white); background: transparent; }
+  .page--landing .plan-card > a::before { transition: opacity var(--motion-feedback) ease; }
+  .page--landing .plan-card:hover { border-color: var(--cyan); }
+  .page--landing .plan-card > a:hover:not(:focus-visible)::before { opacity: .035; }
+  .page--landing .forward-cue:hover:not(:focus-visible)::after { transform: translateX(3px); }
+  .page--landing .plan-card > a:hover:not(:focus-visible) .plan-card-link > span,
+  .page--landing .contact-email:hover:not(:focus-visible) > span { transform: translate(2px, -2px); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .page--landing .hero-cta:active:not(:focus-visible) { transform: scale(.975); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .page--landing .forward-cue::after,
+  .page--landing .plan-card > a .plan-card-link > span,
+  .page--landing .contact-email > span { transform: none !important; }
+  .page--landing .plan-card > a::before { transition-duration: 100ms !important; }
+}
+@media (max-width: 800px) {
+  .page--landing .home-list { grid-template-columns: 1fr; gap: 20px; }
+  .page--landing .home-list strong { margin-bottom: 8px; }
+}
+@media (max-width: 650px) {
+  .page--landing .panorama--solo { padding-block: 40px 48px; }
+  .page--landing .display { font-size: clamp(38px, 10vw, 64px); }
+  .page--landing .lede { margin-top: 28px; font-size: 16px; }
+  .page--landing .hero-actions { margin-top: 28px; gap: 16px 24px; }
+  .page--landing .home-block { padding-bottom: 40px; }
+  .page--landing .contact__head h2 { font-size: clamp(36px, 9vw, 52px); line-height: 1.08; }
+}
+@media print {
+  .page--landing .home-list { grid-template-columns: 1fr; }
+  .page--landing .plan-card > a::before { display: none; }
+}
