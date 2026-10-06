@@ -8,7 +8,7 @@ module.exports = {
 
   // Canonical site URL — used in OG/Twitter meta tags and canonical link.
   // Pages supplies its origin at build time, including a future custom domain.
-  url: process.env.SITE_URL || "https://reshaped.studio",
+  url: (process.env.SITE_URL || "https://reshaped.studio").replace(/^http:/, "https:"),
 
   // Default OG/Twitter description used when a page doesn't override it.
   description: "ReShaped is a product design studio. We map how your product works and turn that structure into a Design Plan your team can build from.",
