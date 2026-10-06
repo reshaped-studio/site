@@ -1,277 +1,50 @@
 ---
-title: "reshaped · landing"
+title: "ReShaped · Product design studio"
 permalink: /
 pageClass: page--landing
 navKey: landing
 sheetIndex: "01"
-description: "Most software gets harder to use the longer it lives. ReShaped redesigns it back to obvious. End-to-end design and build for complex, ambiguous, or overgrown products."
+description: "ReShaped is a product design studio. We map how your product works and turn that structure into a Design Plan your team can build from."
 eleventyExcludeFromCollections: true
 ---
 {% extends "base.njk" %}
-
-{#
-  Landing · v3 · Metro direction
-  Copy: ../landing-copy-v1.md sections A-D, v2.0 (lowercase headlines)
-  Spec: ../identity-system-v3.md sections 3.1, 3.4, 3.5, Part 4
-  Page period color: --magenta
-
-  Block IDs (A.2, B.4.a, etc.) trace back to the copy spec.
-#}
-
 {% block content %}
 
-{# ════════════════════════════════════════════════════════════════ #}
-{# SECTION A · PANORAMA HERO (spec 3.1)                            #}
-{# Two-column desktop: hero left, "method." peeking from right.     #}
-{# ════════════════════════════════════════════════════════════════ #}
-
-<section class="panorama" id="section-a" aria-label="Hero">
-
+<section class="panorama panorama--solo" id="section-a" aria-label="Hero">
   <div class="panorama__hero">
-    <span class="section-label">thesis</span>
+    <h1 class="display">make your product<br>make sense<span class="end">.</span></h1>
 
-    {# A.2 stanza 1 + 2 (ratified, lowercase per copy v2.0) #}
-    <h1 class="display">
-      most software<br>
-      gets harder to use<br>
-      the longer it lives<span class="end">.</span>
-    </h1>
-
-    <p class="display">
-      reshaped redesigns<br>
-      it back to <em>obvious.</em>
-    </p>
-
-    {# A.3 positioning lede #}
     <p class="lede">
-      <strong>End&#8209;to&#8209;end design and build</strong> for complex, ambiguous, or overgrown products. Public services. Internal tools. Legacy systems. We fix the structure first, the surface second. The result is the boring, inevitable version of your product.
+      We turn complex product ideas into clear journeys, screens, and requirements. Your team gets a Design Plan to build from.
     </p>
-  </div>
 
-  {#
-    The panorama peek. The next section's title cropped at the right
-    edge — the Metro signature device. Hidden on mobile per spec 3.1.
-  #}
-  <aside class="panorama__peek" aria-hidden="true">
-    <span class="peek__label">02 &middot; next</span>
-    <p class="peek__title">method.</p>
-  </aside>
-
-</section>
-
-{# ════════════════════════════════════════════════════════════════ #}
-{# SECTION B · METHOD (snapshot — full version on /how-we-work)    #}
-{# ════════════════════════════════════════════════════════════════ #}
-
-<section id="section-b" aria-label="Method">
-
-  <div class="strip" role="list">
-    {# B.6 process steps, ratified copy preserved verbatim #}
-    <div class="strip__cell" role="listitem">
-      <span class="num">01</span>
-      <span class="name">discovery</span>
-      Interview users. Inventory every object the system tracks.
-    </div>
-    <div class="strip__cell" role="listitem">
-      <span class="num">02</span>
-      <span class="name">structure</span>
-      Object nesting, relationships, every action a user can take.
-    </div>
-    <div class="strip__cell" role="listitem">
-      <span class="num">03</span>
-      <span class="name">priority</span>
-      Force&#8209;rank. Cut what isn't earning its place.
-    </div>
-    <div class="strip__cell" role="listitem">
-      <span class="num">04</span>
-      <span class="name">surface</span>
-      Redesign against the structure, not against taste.
-    </div>
-    <div class="strip__cell" role="listitem">
-      <span class="num">05</span>
-      <span class="name">ship</span>
-      Build it. Hand it off running. Stay long enough.
+    <div class="hero-actions">
+      <a class="hero-cta" href="#section-d">Start a conversation</a>
+      <a class="forward-cue" href="#method-pipeline">How we work</a>
     </div>
   </div>
-
-  <p style="margin-top: 8px;">
-    <a href="{{ '/how-we-work/' | url }}" class="forward-cue">read the long version</a>
-  </p>
 </section>
 
-{# ════════════════════════════════════════════════════════════════ #}
-{# SECTION C · WORK (case study card, page-period override: lime)  #}
-{# ════════════════════════════════════════════════════════════════ #}
-
-<section id="section-c" class="page--case" aria-label="Work" style="--page-period: var(--lime); margin-top: 96px;">
-
-  <span class="section-label">case studies</span>
-
-  <article class="case">
-
-    {# C.4.a · Case header #}
-    <header class="case__header">
-      <div class="case__meta">CASE 01 &middot; DEPARTMENT OF HUMAN SERVICES &middot; BENEFITS ELIGIBILITY TOOL &middot; 2026</div>
-      <div class="case__for">FOR: CASEWORKER &middot; 11 YEARS IN ROLE</div>
-    </header>
-
-    {# C.4.b · Stamp #}
-    <div class="case__stamp">ILLUSTRATIVE &middot; HYPOTHETICAL ENGAGEMENT</div>
-
-    {# C.4.c · Narrative (body prose stays title case for proper nouns) #}
-    <div class="case__narrative">
-      <p><span class="dropcap">E</span>very morning, a benefits caseworker at the Department of Human Services opens a tool she's been using for eleven years. Forty&#8209;seven main screens. Three hundred form fields. A navigation pattern she learned by trauma. No new hire inherits it without months of shadowing. The people she's approving or denying benefits to wait while she clicks through it.</p>
-
-      <p>That's what we were asked to redesign.</p>
-
-      <p>We didn't start with screens. We started by listing every object in the system: case, client, household, benefit, determination, task, document. Then we worked out which ones lived inside which. We interviewed caseworkers. We watched them work. We rewrote the list of things the tool needed to do. It was shorter than the list of things it was doing.</p>
-
-      <p>The result was <span class="emph">uglier than the old version in some places.</span> It was also the first version a caseworker could teach her replacement in a single shift.</p>
-    </div>
-
-    {# C.4.d · Outcomes grid #}
-    <div class="case__outcomes">
-      <div class="outcomes__col outcomes__col--before">
-        <span class="outcomes__label">BEFORE</span>
-        <dl>
-          <dt>Main screens</dt><dd>47</dd>
-          <dt>Form fields</dt><dd>300</dd>
-          <dt class="outcomes__key">Time to onboard</dt><dd>Six months</dd>
-        </dl>
-      </div>
-      <div class="outcomes__col outcomes__col--after">
-        <span class="outcomes__label">AFTER</span>
-        <dl>
-          <dt>Main screens</dt><dd>12</dd>
-          <dt>Form fields</dt><dd>84</dd>
-          <dt class="outcomes__key">Time to learn</dt><dd>One shift</dd>
-        </dl>
-      </div>
-    </div>
-
-    {# C.4.e · Case pull-quote #}
-    <div class="case__quote">
-      <span class="label">The number that mattered</span>
-      <p>The number that mattered was &ldquo;one shift.&rdquo; The screen count dropped because the screens were the wrong shape, not because fewer was the goal.</p>
-    </div>
-
-    {# C.5 · Pending cases teaser #}
-    <div class="pending-cases">
-      <span class="pending-cases__label">CASE 02 &middot; IN PROGRESS</span>
-      <span class="pending-cases__desc">Civic workforce tooling. Q3 2026. Write&#8209;up to follow.</span>
-    </div>
-
-  </article>
-
-  <p style="margin-top: 24px;">
-    <a href="#section-d" class="forward-cue">start a conversation</a>
-  </p>
+<section class="home-block" id="section-plan" aria-labelledby="plan-heading">
+<h2 class="home-block__title" id="plan-heading">a plan you can build from.</h2>
+<p class="home-block__body">For a new product or a redesign, the first engagement delivers a Design Plan. Review the direction before committing to production.</p>
+<ul class="home-list">
+<li><strong>The product map.</strong> What people manage, how those things connect, and what people can do with them.</li>
+<li><strong>The key journeys and wireframes.</strong> How someone moves through the work, including what happens when things go wrong.</li>
+<li><strong>The requirements and validation plan.</strong> What to build and what still needs to be tested.</li>
+</ul>
+<p class="home-block__body" style="margin-top:24px">Build with your team, or scope a separate build with us once the plan is accepted.</p>
 </section>
 
-{# ════════════════════════════════════════════════════════════════ #}
-{# SECTION D · CONTACT                                              #}
-{# Page period stays magenta for landing; contact heading uses      #}
-{# the page color via section-label rule.                           #}
-{# ════════════════════════════════════════════════════════════════ #}
+<section class="process-timeline" id="method-pipeline" aria-labelledby="timeline-title"><header class="timeline-heading"><span class="timeline-kicker">OUR APPROACH</span><h2 id="timeline-title">from context to a clear screen.</h2><p>Take something familiar: ordering a coffee. Follow one oat latte from the first conversation to an order screen.</p></header><ol class="timeline-steps"><li class="timeline-step"><span class="timeline-marker" aria-hidden="true">01</span><div class="timeline-copy"><h3>understand the work.</h3><p>We start with what a person wants to do. Here, a customer wants to order their coffee ahead, and the café needs the details to make it.</p></div><figure class="timeline-illustration"><div class="context-notes"><blockquote><span class="note-label">THE CUSTOMER</span><p>“One medium oat latte, please. I’d like to pick it up on my way to work.”</p></blockquote><blockquote><span class="note-label">THE CAFÉ</span><p>“People choose a drink, a size, and a milk. An order can include several drinks.”</p></blockquote></div></figure></li><li class="timeline-step"><span class="timeline-marker" aria-hidden="true">02</span><div class="timeline-copy"><h3>find the pieces.</h3><p>We identify what people choose, what they need to know, and what they can do. A latte on the menu is different from the oat latte in someone’s order.</p></div><figure class="timeline-illustration"><div class="word-sort"><div><h4>Things people choose and track</h4><p><span class="word-chip word-chip--object">drink</span><span class="word-chip word-chip--object">order item</span><span class="word-chip word-chip--object">order</span></p></div><div><h4>Information they need</h4><p><span class="word-chip">size</span><span class="word-chip">milk</span><span class="word-chip">quantity</span><span class="word-chip">price</span><span class="word-chip">pickup estimate</span></p></div><div><h4>Actions they take</h4><p><span class="word-chip word-chip--action">choose a drink</span><span class="word-chip word-chip--action">customize</span><span class="word-chip word-chip--action">add to order</span><span class="word-chip word-chip--action">place order</span></p></div></div></figure></li><li class="timeline-step"><span class="timeline-marker" aria-hidden="true">03</span><div class="timeline-copy"><h3>give each piece a place.</h3><p>The drink defines the available choices. The order item records the customer’s size, milk, and quantity. The order holds the total and pickup details.</p></div><figure class="timeline-illustration"><table class="object-matrix"><caption class="visually-hidden">Coffee ordering: drink, order item, and order, with their information and actions.</caption><thead><tr><td></td><th scope="col">drink</th><th scope="col">order item</th><th scope="col">order</th></tr></thead><tbody><tr><th scope="row">Information</th><td><span>name</span><span>available options</span><span>base price</span></td><td><span>size</span><span>milk</span><span>quantity</span><span>item total</span></td><td><span>pickup estimate</span><span>total</span><span>status</span></td></tr><tr><th scope="row">Actions</th><td><span>choose</span></td><td><span>customize</span><span>remove</span></td><td><span>place order</span></td></tr></tbody></table><div class="mobile-matrix"><section class="mobile-object"><h3>drink</h3><dl><div><dt>Information</dt><dd><span>name</span><span>available options</span><span>base price</span></dd></div><div><dt>Actions</dt><dd><span>choose</span></dd></div></dl></section><section class="mobile-object"><h3>order item</h3><dl><div><dt>Information</dt><dd><span>size</span><span>milk</span><span>quantity</span><span>item total</span></dd></div><div><dt>Actions</dt><dd><span>customize</span><span>remove</span></dd></div></dl></section><section class="mobile-object"><h3>order</h3><dl><div><dt>Information</dt><dd><span>pickup estimate</span><span>total</span><span>status</span></dd></div><div><dt>Actions</dt><dd><span>place order</span></dd></div></dl></section></div></figure></li><li class="timeline-step"><span class="timeline-marker" aria-hidden="true">04</span><div class="timeline-copy"><h3>connect the objects.</h3><p>One order can contain several items. Each item refers to a drink on the menu, with the customer’s choices attached.</p></div><figure class="timeline-illustration"><div class="relationship-map"><div class="relationship-node"><span class="diagram-label">THE PURCHASE</span><strong>order</strong><small>#1042 · pickup</small></div><div class="relationship-edge"><span>contains</span><i aria-hidden="true"></i></div><div class="relationship-node relationship-node--focus"><span class="diagram-label">YOUR CHOICE</span><strong>order item</strong><small>Medium · oat milk · ×1</small></div><div class="relationship-edge"><span>refers to</span><i aria-hidden="true"></i></div><div class="relationship-node"><span class="diagram-label">ON THE MENU</span><strong>drink</strong><small>Latte</small></div></div></figure></li><li class="timeline-step"><span class="timeline-marker" aria-hidden="true">05</span><div class="timeline-copy"><h3>choose what matters.</h3><p>Before placing an order, the customer needs to confirm their coffee, see the price, and know when to collect it. Those questions set the screen’s priorities.</p></div><figure class="timeline-illustration"><div class="task-brief"><div class="task-brief__head"><span class="diagram-label">ORDERING AHEAD</span><h4>“Can I get my oat latte<br>and know when it’ll be ready?”</h4></div><dl><div><dt>Confirm</dt><dd>Drink, size, milk, and quantity</dd></div><div><dt>Show clearly</dt><dd>Total price and pickup estimate</dd></div><div><dt>Primary action</dt><dd>Place order <span aria-hidden="true">↗</span></dd></div></dl></div></figure></li><li class="timeline-step"><span class="timeline-marker" aria-hidden="true">06</span><div class="timeline-copy"><h3>shape the screen.</h3><p>The wireframe brings those decisions together: the configured coffee, the order total, the pickup estimate, and one clear action to place the order.</p></div><figure class="timeline-illustration"><div class="coffee-wireframe"><header><span>morning coffee<span class="app-period">.</span></span><span class="diagram-label">PICKUP ORDER</span></header><div class="coffee-order"><div class="coffee-order__heading"><h4>your order.</h4><span>1 item</span></div><div class="coffee-item"><div class="coffee-cup" aria-hidden="true"><svg viewBox="0 0 80 90"><path d="M19 27h42l-5 48H24zM16 20h48v7H16zM23 13h34l4 7H19zM22 43h36M25 59h31"/></svg></div><div class="coffee-item__details"><span class="diagram-label">DRINK</span><h5>Oat latte</h5><dl><div><dt>Size</dt><dd>Medium</dd></div><div><dt>Milk</dt><dd>Oat</dd></div><div><dt>Quantity</dt><dd>1</dd></div></dl></div><strong class="coffee-price">$5.50</strong></div><div class="coffee-pickup"><span class="diagram-label">PICKUP ESTIMATE</span><strong>Ready in 5–8 minutes</strong></div><div class="coffee-total"><span>Total</span><strong>$5.50</strong></div><span class="coffee-place-order">Place order <span aria-hidden="true">↗</span></span></div></div></figure></li></ol></section>
+<section class="plan-gallery" id="design-plans" aria-labelledby="gallery-heading"><header><h2 id="gallery-heading">see what a design plan looks like.</h2><p>Three example plans, from the initial problem to the screens and requirements.</p></header><div class="plan-gallery-grid">{% for plan in designPlans %}<article class="plan-card"><a href="{{ ('/design-plans/' + plan.slug + '/') | url }}"><img src="{{ plan.previewImage | url }}" width="800" height="620" alt="{{ plan.previewAlt | escape }}" loading="lazy"><div class="plan-card-body"><h3>{{ plan.name }}</h3><p>{{ plan.summary }}</p><span class="plan-card-link">View Design Plan <span aria-hidden="true">↗</span></span></div></a></article>{% endfor %}</div></section>
 
-<section id="section-d" class="contact" aria-label="Contact">
-
-  {# D.1 / D.2 / D.3 · Contact head (lowercase per copy v2.0) #}
+<section id="section-d" class="contact" aria-labelledby="contact-heading">
   <div class="contact__head">
-    <span class="section-label">contact</span>
-    <h2>tell us where it hurts.</h2>
-    <p class="lead">Describe the product, the people stuck inside it, and what would count as success. We will tell you honestly whether we can help.</p>
+    <h2 id="contact-heading">what are you working on?</h2>
+    <p class="lead">Tell us what you’re building, who it serves, and where you need help.</p>
+    <a class="contact-email" href="mailto:hello@reshaped.studio">hello@reshaped.studio <span aria-hidden="true">↗</span></a>
   </div>
-
-  <div class="contact__grid">
-
-    {# D.4 · What we need from you #}
-    <aside class="contact__needs">
-      <h3>WHAT WE NEED FROM YOU TO DO GOOD WORK</h3>
-      <ol>
-        <li><span class="step">01</span><span><strong>Direct access</strong> to the people who make the real decisions.</span></li>
-        <li><span class="step">02</span><span><strong>Room for discovery</strong> before design.</span></li>
-        <li><span class="step">03</span><span><strong>Willingness to consolidate and remove,</strong> not just add.</span></li>
-        <li><span class="step">04</span><span><strong>A timeline</strong> that respects structural work.</span></li>
-        <li><span class="step">05</span><span><strong>Domain experts</strong> we can actually talk to.</span></li>
-      </ol>
-    </aside>
-
-    {#
-      D.5 · Contact form
-
-      Wired to mailto: on submit. Static-site friendly, no third-party
-      form service required, no JS framework. Builds a properly encoded
-      mailto URL from the four fields and opens the user's email client.
-      The user can then review and send from their own account.
-
-      Placeholder address: hello@reshaped.example. Aaron to swap before
-      deploy. The inline data-attribute is the single edit point.
-    #}
-    <form class="contact__form"
-          id="contact"
-          data-contact-email="hello@reshaped.example"
-          onsubmit="return reshapedContactSubmit(this);">
-      <span class="form-label">CONTACT FORM &middot; SHEET D &middot; 01</span>
-
-      <div class="field">
-        <label for="cf-name">Name</label>
-        <input id="cf-name" name="name" type="text" autocomplete="name" required>
-      </div>
-
-      <div class="field">
-        <label for="cf-org">Company or organization</label>
-        <input id="cf-org" name="org" type="text" autocomplete="organization">
-      </div>
-
-      <div class="field">
-        <label for="cf-email">Email</label>
-        <input id="cf-email" name="email" type="email" autocomplete="email" required>
-      </div>
-
-      <div class="field">
-        <label for="cf-hurts">Where it hurts</label>
-        <textarea id="cf-hurts" name="hurts" rows="5" required placeholder="Too many screens. A UI that used to make sense but doesn't anymore. Users spending more time figuring out the software than doing their job."></textarea>
-      </div>
-
-      <button type="submit" class="submit">send</button>
-    </form>
-
-    <script>
-      // Builds a mailto: URL from the form fields and opens the user's
-      // email client. Returns false so the form does not navigate.
-      function reshapedContactSubmit(form) {
-        var to = form.dataset.contactEmail || 'hello@reshaped.example';
-        var name  = (form.elements['name']  || {}).value || '';
-        var org   = (form.elements['org']   || {}).value || '';
-        var email = (form.elements['email'] || {}).value || '';
-        var hurts = (form.elements['hurts'] || {}).value || '';
-
-        var subject = 'Where it hurts: ' + (org || name || 'inquiry');
-        var bodyLines = [
-          'From: ' + name + (email ? ' <' + email + '>' : ''),
-          org ? 'Org: ' + org : '',
-          '',
-          hurts,
-          '',
-          'Sent from the reshaped contact form.'
-        ].filter(Boolean);
-
-        var url = 'mailto:' + encodeURIComponent(to) +
-                  '?subject=' + encodeURIComponent(subject) +
-                  '&body='    + encodeURIComponent(bodyLines.join('\n'));
-
-        window.location.href = url;
-        return false;
-      }
-    </script>
-  </div>
-
-  {# D.6 · Response promise #}
-  <aside class="contact__promise">
-    We read every message that comes through here. We reply within two business days, usually less. If we are not the right fit, we say so, and we point you to a shop we think could help.
-  </aside>
-
 </section>
 
 {% endblock %}

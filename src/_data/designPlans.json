@@ -1,0 +1,1204 @@
+[
+  {
+    "slug": "coffee-ordering",
+    "name": "Morning Coffee",
+    "summary": "Give customers a clear path from choosing a drink to confirming a pickup order.",
+    "audience": "Customers ordering ahead; café staff preparing pickup orders.",
+    "context": "A customer wants a medium oat latte on the way to work. The café needs an exact configuration and a clear pickup order. Currently, choices and pickup details are scattered across separate screens.",
+    "scope": "Drink configuration, order review, confirmation, and an unavailable-drink alternative.",
+    "opportunity": "Let a customer confirm the right coffee, understand the total, and see a pickup estimate before placing the order.",
+    "success": "In task-based usability sessions, ask people to configure a drink, explain the price and pickup estimate, and find the confirmation. Observe errors and requests for help; establish a baseline before setting targets.",
+    "insights": [
+      {
+        "observation": "The menu drink and the customer’s configured coffee represent different things.",
+        "decision": "Model Drink separately from Order item so size, milk, and quantity stay attached to the customer’s choice.",
+        "label": "Assumption 1"
+      },
+      {
+        "observation": "A customer needs to check the price and timing before committing.",
+        "decision": "Keep the total and pickup estimate beside the final order action.",
+        "label": "Assumption 2"
+      },
+      {
+        "observation": "Availability may change while a customer chooses.",
+        "decision": "Explain an unavailable drink and offer a concrete alternative without discarding unrelated order items.",
+        "label": "Assumption 3"
+      }
+    ],
+    "objects": [
+      {
+        "name": "Drink",
+        "definition": "A drink available on the café menu.",
+        "instance": "Latte",
+        "attributes": [
+          {
+            "name": "Name",
+            "description": "The menu name."
+          },
+          {
+            "name": "Available options",
+            "description": "Permitted sizes and milks."
+          },
+          {
+            "name": "Base price",
+            "description": "Starting price before option adjustments."
+          },
+          {
+            "name": "Availability",
+            "description": "Whether it can currently be ordered."
+          }
+        ],
+        "relationships": [
+          "A Drink can be referenced by many Order items."
+        ],
+        "actions": [
+          "Choose a drink",
+          "View options"
+        ],
+        "states": [
+          "Available",
+          "Unavailable"
+        ],
+        "rules": [
+          "Only permitted options are selectable.",
+          "Availability is rechecked before Order submission."
+        ]
+      },
+      {
+        "name": "Order item",
+        "definition": "One configured drink in an order.",
+        "instance": "Medium latte · oat milk · quantity 1",
+        "attributes": [
+          {
+            "name": "Size",
+            "description": "The selected permitted size."
+          },
+          {
+            "name": "Milk",
+            "description": "The selected permitted milk."
+          },
+          {
+            "name": "Quantity",
+            "description": "Number of this configured drink."
+          },
+          {
+            "name": "Item total",
+            "description": "Price including options and quantity."
+          }
+        ],
+        "relationships": [
+          "Each Order item refers to one Drink.",
+          "Each Order item belongs to one Order."
+        ],
+        "actions": [
+          "Customize",
+          "Add to order",
+          "Change quantity",
+          "Remove from order"
+        ],
+        "states": [
+          "Configured",
+          "Needs revision if its Drink becomes unavailable"
+        ],
+        "rules": [
+          "Quantity must be positive for an included item.",
+          "Changing options recalculates the item total."
+        ]
+      },
+      {
+        "name": "Order",
+        "definition": "A collection of configured drinks for one pickup.",
+        "instance": "Order #1042 · one oat latte",
+        "attributes": [
+          {
+            "name": "Items",
+            "description": "The drinks being purchased."
+          },
+          {
+            "name": "Pickup estimate",
+            "description": "Expected readiness, confirmed at submission."
+          },
+          {
+            "name": "Total",
+            "description": "Sum of item totals; tax treatment needs validation."
+          },
+          {
+            "name": "Status",
+            "description": "Where the order is in its lifecycle."
+          }
+        ],
+        "relationships": [
+          "One Order contains one or more Order items when submitted."
+        ],
+        "actions": [
+          "Review order",
+          "Place order"
+        ],
+        "states": [
+          "Draft",
+          "Submitted",
+          "Ready",
+          "Collected"
+        ],
+        "rules": [
+          "A submitted Order contains at least one valid item.",
+          "Confirmation follows acceptance, not merely clicking Place order."
+        ]
+      }
+    ],
+    "relations": [
+      [
+        "Order",
+        "contains",
+        "Order item",
+        "refers to",
+        "Drink"
+      ]
+    ],
+    "validation": [
+      "Test configuration and review with people who order ahead.",
+      "Test the unavailable-drink path with an existing item in the order.",
+      "Check that café staff can interpret the submitted configurations."
+    ],
+    "flows": [
+      {
+        "name": "Order a coffee",
+        "description": "A customer configures an oat latte and confirms a pickup order.",
+        "steps": [
+          {
+            "title": "Configure drink",
+            "task": "Choose a medium latte with oat milk.",
+            "rationale": "Keep options next to the drink so the customer can see what they are configuring.",
+            "annotation": "The price updates with the selected options.",
+            "screenTitle": "Make it yours",
+            "subtitle": "Latte · menu",
+            "rows": [
+              [
+                "Size",
+                "Medium"
+              ],
+              [
+                "Milk",
+                "Oat milk"
+              ],
+              [
+                "Quantity",
+                "1 · item total $5.50"
+              ]
+            ],
+            "action": "Add to order",
+            "image": "/img/design-plans/coffee-ordering-1-1.svg",
+            "alt": "Make it yours. Size — Medium. Milk — Oat milk. Quantity — 1 · item total $5.50. Action: Add to order."
+          },
+          {
+            "title": "Review order",
+            "task": "Confirm the coffee, total, and pickup estimate.",
+            "rationale": "Review gathers the order’s information before the customer commits.",
+            "annotation": "The configured item is distinct from the menu drink.",
+            "screenTitle": "Your order",
+            "subtitle": "Pickup",
+            "rows": [
+              [
+                "Oat latte",
+                "Medium · oat milk · ×1"
+              ],
+              [
+                "Pickup estimate",
+                "Ready in 5–8 minutes"
+              ],
+              [
+                "Total",
+                "$5.50"
+              ]
+            ],
+            "action": "Place order",
+            "image": "/img/design-plans/coffee-ordering-1-2.svg",
+            "alt": "Your order. Oat latte — Medium · oat milk · ×1. Pickup estimate — Ready in 5–8 minutes. Total — $5.50. Action: Place order."
+          },
+          {
+            "title": "Confirmation",
+            "task": "Find the order number and pickup instructions.",
+            "rationale": "The customer needs a clear receipt of the action and a next step.",
+            "annotation": "Confirmation only appears after the order is accepted.",
+            "screenTitle": "You’re on the list",
+            "subtitle": "Order #1042",
+            "rows": [
+              [
+                "Your coffee",
+                "Medium oat latte · ×1"
+              ],
+              [
+                "Pickup",
+                "Collect at the pickup counter"
+              ],
+              [
+                "Status",
+                "Submitted · estimated 5–8 minutes"
+              ]
+            ],
+            "action": "View order",
+            "image": "/img/design-plans/coffee-ordering-1-3.svg",
+            "alt": "You’re on the list. Your coffee — Medium oat latte · ×1. Pickup — Collect at the pickup counter. Status — Submitted · estimated 5–8 minutes. Action: View order."
+          }
+        ]
+      },
+      {
+        "name": "A drink becomes unavailable",
+        "description": "Preserve the order and offer a clear alternative.",
+        "steps": [
+          {
+            "title": "Drink unavailable",
+            "task": "Understand why the selected latte cannot be ordered.",
+            "rationale": "Explain the changed availability before asking for another choice.",
+            "annotation": "Other drinks in the order remain intact.",
+            "screenTitle": "Latte is unavailable",
+            "subtitle": "Your other items are saved",
+            "rows": [
+              [
+                "Affected item",
+                "Medium oat latte"
+              ],
+              [
+                "What changed",
+                "This drink is unavailable today"
+              ],
+              [
+                "Next step",
+                "Choose an available drink"
+              ]
+            ],
+            "action": "See alternatives",
+            "image": "/img/design-plans/coffee-ordering-2-1.svg",
+            "alt": "Latte is unavailable. Affected item — Medium oat latte. What changed — This drink is unavailable today. Next step — Choose an available drink. Action: See alternatives."
+          },
+          {
+            "title": "Choose an alternative",
+            "task": "Select an available drink and review its options.",
+            "rationale": "A replacement needs its own valid choices and price.",
+            "annotation": "The new price must be confirmed at order review.",
+            "screenTitle": "Choose another drink",
+            "subtitle": "Available menu",
+            "rows": [
+              [
+                "Flat white",
+                "Oat milk available"
+              ],
+              [
+                "Americano",
+                "Milk optional"
+              ],
+              [
+                "After selection",
+                "Configure, then review the updated order"
+              ]
+            ],
+            "action": "Choose flat white",
+            "image": "/img/design-plans/coffee-ordering-2-2.svg",
+            "alt": "Choose another drink. Flat white — Oat milk available. Americano — Milk optional. After selection — Configure, then review the updated order. Action: Choose flat white."
+          }
+        ]
+      }
+    ],
+    "sheetIndex": "04",
+    "previewImage": "/img/design-plans/coffee-ordering-1-2.svg",
+    "previewAlt": "Your order — illustrative Morning Coffee wireframe",
+    "document": {
+      "version": "0.1",
+      "status": "Draft for review",
+      "preparedBy": "ReShaped",
+      "date": "October 6, 2026",
+      "decision": "Agree the configuration, review, and pickup-confirmation flow before commissioning production.",
+      "reviewOwner": "Café operations lead"
+    },
+    "goals": [
+      {
+        "id": "G-01",
+        "title": "Configure the intended drink",
+        "criterion": "A customer can select a permitted size and milk, then identify the resulting item and price.",
+        "object": "object-2",
+        "screen": "screen-1-1"
+      },
+      {
+        "id": "G-02",
+        "title": "Commit with clear pickup information",
+        "criterion": "The customer can explain the total and pickup estimate before placing the order.",
+        "object": "object-3",
+        "screen": "screen-1-2"
+      },
+      {
+        "id": "G-03",
+        "title": "Recover from changed availability",
+        "criterion": "The customer can replace an unavailable drink without losing unrelated order items.",
+        "object": "object-1",
+        "screen": "screen-2-1"
+      }
+    ],
+    "requirementDetails": [
+      {
+        "id": "R-01",
+        "statement": "Only offer sizes and milks permitted for the selected drink.",
+        "acceptance": "Given a selected Drink, only permitted options can be chosen; the Order item records those choices and quantity.",
+        "goal": "G-01"
+      },
+      {
+        "id": "R-02",
+        "statement": "Show item totals, order total, and a pickup estimate before submission.",
+        "acceptance": "Before submission, the review shows all configured items, their totals, the Order total, and the current pickup estimate.",
+        "goal": "G-02"
+      },
+      {
+        "id": "R-03",
+        "statement": "Confirm the order identifier and pickup instructions.",
+        "acceptance": "After acceptance, confirmation shows the Order reference, submitted status, and pickup instructions.",
+        "goal": "G-02"
+      },
+      {
+        "id": "R-04",
+        "statement": "Recheck availability before accepting the order; preserve other items if a change is needed.",
+        "acceptance": "If a Drink becomes unavailable at submission, the Order is not accepted; the affected item is identified and unrelated items are retained.",
+        "goal": "G-03"
+      }
+    ],
+    "edgeStates": [
+      {
+        "state": "Empty",
+        "trigger": "No items in the order",
+        "behavior": "Show an empty order with a link to the menu; prevent order submission."
+      },
+      {
+        "state": "Loading",
+        "trigger": "Availability or submission is being checked",
+        "behavior": "Keep the configured items visible, show progress, and prevent duplicate submission."
+      },
+      {
+        "state": "Error",
+        "trigger": "Submission fails or its outcome is uncertain",
+        "behavior": "Retain the draft; distinguish rejected submission from an unknown result. Check the existing order before offering a retry."
+      },
+      {
+        "state": "Permission denied",
+        "trigger": "Ordering is disabled for this location",
+        "behavior": "Explain that online ordering is unavailable; retain the draft and give the customer the location’s contact path."
+      }
+    ],
+    "openDecisions": [
+      {
+        "id": "Q-01",
+        "question": "When should pickup estimates be refreshed?",
+        "owner": "Café operations lead"
+      },
+      {
+        "id": "Q-02",
+        "question": "Are taxes included in menu prices or calculated at review?",
+        "owner": "Café operations lead"
+      },
+      {
+        "id": "Q-03",
+        "question": "How should price changes be handled during configuration?",
+        "owner": "Café operations lead"
+      }
+    ],
+    "outOfScope": [
+      "Payment processing",
+      "Accounts and rewards",
+      "Café operations"
+    ]
+  },
+  {
+    "slug": "class-booking",
+    "name": "Clay Saturday",
+    "summary": "Help beginners find a pottery session and reserve a place with confidence.",
+    "audience": "People booking a first pottery class; studio staff managing sessions.",
+    "context": "A beginner wants a pottery class on Saturday. Currently, the class description and specific dates are mixed together, leaving people unsure which session they are reserving.",
+    "scope": "Session selection, booking review, confirmation, and a full-session alternative.",
+    "opportunity": "Make the activity, the scheduled session, and the person’s reservation distinct while keeping them connected.",
+    "success": "Ask prospective learners to choose a beginner session, explain its date, duration, and location, and confirm a booking. Observe mistaken session choices and whether people can recover from a full session.",
+    "insights": [
+      {
+        "observation": "The activity can remain the same across multiple dates.",
+        "decision": "Separate Class from Session; attach date, capacity, and location to the scheduled session.",
+        "label": "Assumption 1"
+      },
+      {
+        "observation": "Beginners need to judge fit before reserving.",
+        "decision": "Keep experience level and what to expect near the available sessions.",
+        "label": "Assumption 2"
+      },
+      {
+        "observation": "A session can fill up between selection and confirmation.",
+        "decision": "Recheck capacity and offer another session while retaining contact details.",
+        "label": "Assumption 3"
+      }
+    ],
+    "objects": [
+      {
+        "name": "Class",
+        "definition": "An activity that can be offered on multiple dates.",
+        "instance": "Beginner pottery",
+        "attributes": [
+          {
+            "name": "Title",
+            "description": "Name of the activity."
+          },
+          {
+            "name": "Description",
+            "description": "What participants will make and learn."
+          },
+          {
+            "name": "Level",
+            "description": "Required experience."
+          },
+          {
+            "name": "Duration",
+            "description": "Typical length of the class."
+          }
+        ],
+        "relationships": [
+          "One Class has many Sessions."
+        ],
+        "actions": [
+          "View class",
+          "Browse sessions"
+        ],
+        "states": [
+          "Listed",
+          "Unlisted"
+        ],
+        "rules": [
+          "A Class can have multiple dated Sessions.",
+          "Unlisted Classes are not offered for new selection."
+        ]
+      },
+      {
+        "name": "Session",
+        "definition": "One scheduled occurrence of a class.",
+        "instance": "Beginner pottery · Saturday 10 October at 10:00",
+        "attributes": [
+          {
+            "name": "Date and time",
+            "description": "When this occurrence begins."
+          },
+          {
+            "name": "Location",
+            "description": "Where to attend."
+          },
+          {
+            "name": "Capacity",
+            "description": "Maximum number of participants."
+          },
+          {
+            "name": "Available places",
+            "description": "Capacity remaining after confirmed bookings."
+          }
+        ],
+        "relationships": [
+          "Each Session belongs to one Class.",
+          "Each Session can have many Bookings."
+        ],
+        "actions": [
+          "Select session"
+        ],
+        "states": [
+          "Available",
+          "Full",
+          "Canceled"
+        ],
+        "rules": [
+          "Available places cannot exceed capacity.",
+          "Capacity is rechecked when confirming a Booking."
+        ]
+      },
+      {
+        "name": "Booking",
+        "definition": "A person’s reservation for one session.",
+        "instance": "Booking #208 · one place",
+        "attributes": [
+          {
+            "name": "Contact",
+            "description": "Participant’s name and email."
+          },
+          {
+            "name": "Places",
+            "description": "Number of reserved places."
+          },
+          {
+            "name": "Reference",
+            "description": "Identifier used for confirmation."
+          },
+          {
+            "name": "Status",
+            "description": "State of the reservation."
+          }
+        ],
+        "relationships": [
+          "Each Booking reserves places in one Session."
+        ],
+        "actions": [
+          "Review booking",
+          "Confirm booking"
+        ],
+        "states": [
+          "Draft",
+          "Confirmed",
+          "Canceled"
+        ],
+        "rules": [
+          "A Booking refers to one Session.",
+          "A failed capacity check cannot produce a confirmed Booking."
+        ]
+      }
+    ],
+    "relations": [
+      [
+        "Class",
+        "has",
+        "Session",
+        "has",
+        "Booking"
+      ]
+    ],
+    "validation": [
+      "Test with people who have never booked a pottery class.",
+      "Ask participants to identify their selected date and arrival location.",
+      "Test recovery when a session fills during booking."
+    ],
+    "flows": [
+      {
+        "name": "Book a beginner session",
+        "description": "Choose a Saturday session, review the reservation, and receive confirmation.",
+        "steps": [
+          {
+            "title": "Choose session",
+            "task": "Find a beginner class with an available Saturday session.",
+            "rationale": "Separate the enduring class description from scheduled dates.",
+            "annotation": "Availability belongs to each session.",
+            "screenTitle": "Beginner pottery",
+            "subtitle": "No experience needed · 2 hours",
+            "rows": [
+              [
+                "Saturday 10 October · 10:00",
+                "3 places available"
+              ],
+              [
+                "Saturday 10 October · 14:00",
+                "6 places available"
+              ],
+              [
+                "Location",
+                "Clay studio · location"
+              ]
+            ],
+            "action": "Choose 10:00",
+            "image": "/img/design-plans/class-booking-1-1.svg",
+            "alt": "Beginner pottery. Saturday 10 October · 10:00 — 3 places available. Saturday 10 October · 14:00 — 6 places available. Location — Clay studio · location. Action: Choose 10:00. The 10:00 session is selected."
+          },
+          {
+            "title": "Review booking",
+            "task": "Confirm the chosen session and participant details.",
+            "rationale": "Make the actual date and location visible before reservation.",
+            "annotation": "The booking is for this session, not the class generally.",
+            "screenTitle": "Review your place",
+            "subtitle": "Beginner pottery",
+            "rows": [
+              [
+                "Session",
+                "Saturday 10 October · 10:00–12:00"
+              ],
+              [
+                "Participant",
+                "Alex · alex@example.com"
+              ],
+              [
+                "Reservation",
+                "1 place · Clay studio"
+              ]
+            ],
+            "action": "Confirm booking",
+            "image": "/img/design-plans/class-booking-1-2.svg",
+            "alt": "Review your place. Session — Saturday 10 October · 10:00–12:00. Participant — Alex · alex@example.com. Reservation — 1 place · Clay studio. Action: Confirm booking."
+          },
+          {
+            "title": "Confirmation",
+            "task": "Find the booking reference and attendance information.",
+            "rationale": "Confirmation should support showing up as well as acknowledge the reservation.",
+            "annotation": "The selected session stays visible after booking.",
+            "screenTitle": "Your place is reserved",
+            "subtitle": "Booking #208",
+            "rows": [
+              [
+                "Class",
+                "Beginner pottery"
+              ],
+              [
+                "When and where",
+                "Saturday 10 October at 10:00 · Clay studio"
+              ],
+              [
+                "Bring",
+                "Clothes you can get clay on"
+              ]
+            ],
+            "action": "View booking",
+            "image": "/img/design-plans/class-booking-1-3.svg",
+            "alt": "Your place is reserved. Class — Beginner pottery. When and where — Saturday 10 October at 10:00 · Clay studio. Bring — Clothes you can get clay on. Action: View booking."
+          }
+        ]
+      },
+      {
+        "name": "The session fills up",
+        "description": "Explain the capacity change and help the learner choose another date.",
+        "steps": [
+          {
+            "title": "Session full",
+            "task": "Understand why the chosen session cannot be reserved.",
+            "rationale": "Capacity is rechecked before confirmation to prevent overbooking.",
+            "annotation": "Keep contact details so the learner does not repeat work.",
+            "screenTitle": "That session is full",
+            "subtitle": "Your details are saved",
+            "rows": [
+              [
+                "Selected session",
+                "Saturday 10 October · 10:00"
+              ],
+              [
+                "What happened",
+                "The last place has been reserved"
+              ],
+              [
+                "Next step",
+                "Choose another available session"
+              ]
+            ],
+            "action": "See other sessions",
+            "image": "/img/design-plans/class-booking-2-1.svg",
+            "alt": "That session is full. Selected session — Saturday 10 October · 10:00. What happened — The last place has been reserved. Next step — Choose another available session. Action: See other sessions."
+          },
+          {
+            "title": "Choose another session",
+            "task": "Select another occurrence of the same class.",
+            "rationale": "Preserve the class context while changing only the scheduled session.",
+            "annotation": "The learner reviews the new time before confirming.",
+            "screenTitle": "Another time for pottery",
+            "subtitle": "Beginner pottery",
+            "rows": [
+              [
+                "Saturday 10 October · 14:00",
+                "6 places available"
+              ],
+              [
+                "Saturday 17 October · 10:00",
+                "4 places available"
+              ],
+              [
+                "Your details",
+                "Alex · 1 place · retained"
+              ]
+            ],
+            "action": "Choose 14:00",
+            "image": "/img/design-plans/class-booking-2-2.svg",
+            "alt": "Another time for pottery. Saturday 10 October · 14:00 — 6 places available. Saturday 17 October · 10:00 — 4 places available. Your details — Alex · 1 place · retained. Action: Choose 14:00. The 14:00 session is selected."
+          }
+        ]
+      }
+    ],
+    "sheetIndex": "05",
+    "previewImage": "/img/design-plans/class-booking-1-2.svg",
+    "previewAlt": "Review your place — illustrative Clay Saturday wireframe",
+    "document": {
+      "version": "0.1",
+      "status": "Draft for review",
+      "preparedBy": "ReShaped",
+      "date": "October 6, 2026",
+      "decision": "Agree the Class, Session, and Booking structure and capacity-recovery flow before commissioning production.",
+      "reviewOwner": "Studio operations lead"
+    },
+    "goals": [
+      {
+        "id": "G-01",
+        "title": "Find the right scheduled class",
+        "criterion": "A learner can identify level, location, date, and available places for the chosen Session.",
+        "object": "object-2",
+        "screen": "screen-1-1"
+      },
+      {
+        "id": "G-02",
+        "title": "Reserve the intended session",
+        "criterion": "Review and confirmation consistently identify the selected Session and reserved places.",
+        "object": "object-3",
+        "screen": "screen-1-2"
+      },
+      {
+        "id": "G-03",
+        "title": "Recover when a session fills",
+        "criterion": "The learner can choose another Session without re-entering retained contact details.",
+        "object": "object-2",
+        "screen": "screen-2-1"
+      }
+    ],
+    "requirementDetails": [
+      {
+        "id": "R-01",
+        "statement": "Show level, duration, location, date, and available places before booking.",
+        "acceptance": "Before selection, each Session shows date, time, location, available places, and the Class level and duration.",
+        "goal": "G-01"
+      },
+      {
+        "id": "R-02",
+        "statement": "Clearly identify the selected session at review.",
+        "acceptance": "Review shows the selected Session, number of places, and participant contact details before confirmation.",
+        "goal": "G-02"
+      },
+      {
+        "id": "R-03",
+        "statement": "Recheck capacity before confirming a booking.",
+        "acceptance": "Confirmation occurs only after sufficient capacity is reserved; failed capacity checks cannot create an overbooking.",
+        "goal": "G-02"
+      },
+      {
+        "id": "R-04",
+        "statement": "Offer alternative sessions if capacity changes; retain entered contact details.",
+        "acceptance": "If the Session fills before confirmation, retain contact details and offer available Sessions for the same Class.",
+        "goal": "G-03"
+      }
+    ],
+    "edgeStates": [
+      {
+        "state": "Empty",
+        "trigger": "No sessions are currently available",
+        "behavior": "Keep the Class information visible and explain that no dates can currently be booked."
+      },
+      {
+        "state": "Loading",
+        "trigger": "Capacity is checked or a reservation submitted",
+        "behavior": "Retain the selected Session and contact details; prevent duplicate reservations."
+      },
+      {
+        "state": "Error",
+        "trigger": "Reservation fails or its outcome is uncertain",
+        "behavior": "Keep entered details. Check for an existing Booking before offering a retry; do not claim a place is reserved without confirmation."
+      },
+      {
+        "state": "Permission denied",
+        "trigger": "The selected session is no longer bookable",
+        "behavior": "Explain the restriction and offer other bookable Sessions; do not take a reservation for the restricted Session."
+      }
+    ],
+    "openDecisions": [
+      {
+        "id": "Q-01",
+        "question": "Can one person reserve places for a group?",
+        "owner": "Studio operations lead"
+      },
+      {
+        "id": "Q-02",
+        "question": "Which time zone should appear for remote sessions?",
+        "owner": "Studio operations lead"
+      },
+      {
+        "id": "Q-03",
+        "question": "What cancellation terms must be shown before confirmation?",
+        "owner": "Studio operations lead"
+      }
+    ],
+    "outOfScope": [
+      "Payment processing and refunds",
+      "Memberships and waitlists"
+    ]
+  },
+  {
+    "slug": "support-workspace",
+    "name": "Clear Desk",
+    "summary": "Give support agents a clear view of the customer, the request, and who owns the next action.",
+    "audience": "Support agents handling customer requests and handing work to colleagues.",
+    "context": "A customer reports that an invoice will not download. In the current workspace, the request, customer history, and assignment are scattered across separate lists. Agents need to establish ownership and communicate what happens next.",
+    "scope": "Request review, agent assignment, customer updates, and a missing-information path.",
+    "opportunity": "Keep the request, its customer context, and the responsible agent together so the next action is explicit.",
+    "success": "Ask agents to review a request, identify the customer and owner, assign an agent, and prepare an update. Observe wrong assignments, missing context, and whether the requester’s next step is clear.",
+    "insights": [
+      {
+        "observation": "The request and the customer’s broader history have different lifecycles.",
+        "decision": "Keep Request separate from Customer, with a clear link to relevant history.",
+        "label": "Assumption 1"
+      },
+      {
+        "observation": "A request may be visible to many agents but owned by one.",
+        "decision": "Show the responsible Agent explicitly, including an unassigned state.",
+        "label": "Assumption 2"
+      },
+      {
+        "observation": "Some requests cannot progress without a specific detail.",
+        "decision": "Use an awaiting-customer state and explain what information is needed.",
+        "label": "Assumption 3"
+      }
+    ],
+    "objects": [
+      {
+        "name": "Request",
+        "definition": "One customer issue that the support team tracks.",
+        "instance": "Request #314 · invoice download fails",
+        "attributes": [
+          {
+            "name": "Subject",
+            "description": "Short description of the issue."
+          },
+          {
+            "name": "Messages",
+            "description": "The customer and agent conversation."
+          },
+          {
+            "name": "Status",
+            "description": "Where the request is in its lifecycle."
+          },
+          {
+            "name": "Priority",
+            "description": "The team’s assessment of urgency."
+          }
+        ],
+        "relationships": [
+          "Each Request belongs to one Customer.",
+          "A Request has zero or one responsible Agent."
+        ],
+        "actions": [
+          "Review",
+          "Assign agent",
+          "Send update",
+          "Request details"
+        ],
+        "states": [
+          "New",
+          "In progress",
+          "Awaiting customer",
+          "Resolved"
+        ],
+        "rules": [
+          "A Request has at most one responsible Agent.",
+          "Status changes follow successful actions, not attempted actions."
+        ]
+      },
+      {
+        "name": "Customer",
+        "definition": "The person contacting the support team.",
+        "instance": "Alex Rivera",
+        "attributes": [
+          {
+            "name": "Name",
+            "description": "How the customer is identified."
+          },
+          {
+            "name": "Contact email",
+            "description": "Where permitted updates are sent."
+          },
+          {
+            "name": "Request history",
+            "description": "Relevant past requests."
+          }
+        ],
+        "relationships": [
+          "One Customer can have many Requests."
+        ],
+        "actions": [
+          "View relevant request history"
+        ],
+        "states": [
+          "Active",
+          "Archived"
+        ],
+        "rules": [
+          "Show only history permitted for the current Agent.",
+          "Customer contact details are not exposed to unauthorized roles."
+        ]
+      },
+      {
+        "name": "Agent",
+        "definition": "A support team member who can own requests.",
+        "instance": "Sam Lee",
+        "attributes": [
+          {
+            "name": "Name",
+            "description": "How colleagues identify the agent."
+          },
+          {
+            "name": "Team",
+            "description": "The agent’s working group."
+          },
+          {
+            "name": "Availability",
+            "description": "Whether they can accept new work."
+          }
+        ],
+        "relationships": [
+          "One Agent can own many Requests."
+        ],
+        "actions": [
+          "Assign as owner",
+          "Reassign request"
+        ],
+        "states": [
+          "Available",
+          "Unavailable"
+        ],
+        "rules": [
+          "Unavailable Agents cannot receive new assignments.",
+          "Only authorized Agents can assign or reassign Requests."
+        ]
+      }
+    ],
+    "relations": [
+      [
+        "Customer",
+        "submits",
+        "Request",
+        "assigned to",
+        "Agent"
+      ]
+    ],
+    "validation": [
+      "Test review and assignment with support agents.",
+      "Test message review and missing-information recovery.",
+      "Review permission boundaries and minimize exposed customer data before implementation."
+    ],
+    "flows": [
+      {
+        "name": "Handle a customer request",
+        "description": "Review the issue, establish ownership, and explain the next step.",
+        "steps": [
+          {
+            "title": "Review request",
+            "task": "Read the customer’s issue and relevant context.",
+            "rationale": "Keep the issue central while showing who reported it and its status.",
+            "annotation": "Context is limited to information needed for this task.",
+            "screenTitle": "Invoice will not download",
+            "subtitle": "Request #314",
+            "rows": [
+              [
+                "Customer",
+                "Alex Rivera · account"
+              ],
+              [
+                "Message",
+                "Download fails after opening invoice"
+              ],
+              [
+                "Status",
+                "New · unassigned"
+              ]
+            ],
+            "action": "Assign an agent",
+            "image": "/img/design-plans/support-workspace-1-1.svg",
+            "alt": "Invoice will not download. Customer — Alex Rivera · account. Message — Download fails after opening invoice. Status — New · unassigned. Action: Assign an agent. A customer-history link provides access to permitted relevant requests."
+          },
+          {
+            "title": "Assign agent",
+            "task": "Choose the colleague responsible for the next action.",
+            "rationale": "Ownership needs to be visible and deliberate.",
+            "annotation": "Unassigned is a real state, not an empty label.",
+            "screenTitle": "Give this request an owner",
+            "subtitle": "Request #314",
+            "rows": [
+              [
+                "Sam Lee",
+                "Available · billing support"
+              ],
+              [
+                "Current owner",
+                "Unassigned"
+              ],
+              [
+                "After assignment",
+                "In progress · Sam Lee"
+              ]
+            ],
+            "action": "Assign to Sam",
+            "image": "/img/design-plans/support-workspace-1-2.svg",
+            "alt": "Give this request an owner. Sam Lee — Available · billing support. Current owner — Unassigned. After assignment — In progress · Sam Lee. Action: Assign to Sam."
+          },
+          {
+            "title": "Update customer",
+            "task": "Review and send a clear explanation of the next step.",
+            "rationale": "Make the recipient and message visible before sending.",
+            "annotation": "Review the recipient and message before sending.",
+            "screenTitle": "Update Alex",
+            "subtitle": "Recipient alex@example.com",
+            "rows": [
+              [
+                "Owner",
+                "Sam Lee"
+              ],
+              [
+                "Draft",
+                "We are checking the invoice download issue."
+              ],
+              [
+                "Next step",
+                "We will update you when we know more."
+              ]
+            ],
+            "action": "Send update",
+            "image": "/img/design-plans/support-workspace-1-3.svg",
+            "alt": "Update Alex. Owner — Sam Lee. Draft — We are checking the invoice download issue.. Next step — We will update you when we know more.. Action: Send update."
+          }
+        ]
+      },
+      {
+        "name": "More information is needed",
+        "description": "Ask a specific question and make the waiting state visible.",
+        "steps": [
+          {
+            "title": "Missing information",
+            "task": "Identify the detail needed to investigate the request.",
+            "rationale": "A concrete question is more useful than a generic request for information.",
+            "annotation": "The agent keeps the existing request and conversation.",
+            "screenTitle": "Which invoice is affected?",
+            "subtitle": "Request #314",
+            "rows": [
+              [
+                "Known",
+                "Invoice download fails"
+              ],
+              [
+                "Missing",
+                "The affected invoice reference"
+              ],
+              [
+                "Owner",
+                "Sam Lee · in progress"
+              ]
+            ],
+            "action": "Request details",
+            "image": "/img/design-plans/support-workspace-2-1.svg",
+            "alt": "Which invoice is affected?. Known — Invoice download fails. Missing — The affected invoice reference. Owner — Sam Lee · in progress. Action: Request details."
+          },
+          {
+            "title": "Request details",
+            "task": "Review the question and set the expectation for the customer.",
+            "rationale": "The request should visibly wait on the customer after the question is sent.",
+            "annotation": "The next response returns to the same request.",
+            "screenTitle": "Ask Alex for the reference",
+            "subtitle": "Message draft",
+            "rows": [
+              [
+                "To",
+                "alex@example.com"
+              ],
+              [
+                "Question",
+                "Which invoice reference fails to download?"
+              ],
+              [
+                "After sending",
+                "Awaiting customer · Sam Lee remains owner"
+              ]
+            ],
+            "action": "Send question",
+            "image": "/img/design-plans/support-workspace-2-2.svg",
+            "alt": "Ask Alex for the reference. To — alex@example.com. Question — Which invoice reference fails to download?. After sending — Awaiting customer · Sam Lee remains owner. Action: Send question."
+          }
+        ]
+      }
+    ],
+    "sheetIndex": "06",
+    "previewImage": "/img/design-plans/support-workspace-1-2.svg",
+    "previewAlt": "Give this request an owner — illustrative Clear Desk wireframe",
+    "document": {
+      "version": "0.1",
+      "status": "Draft for review",
+      "preparedBy": "ReShaped",
+      "date": "October 6, 2026",
+      "decision": "Agree request ownership, customer context, and the update and missing-information flows before commissioning production.",
+      "reviewOwner": "Support team lead"
+    },
+    "goals": [
+      {
+        "id": "G-01",
+        "title": "Understand the request in context",
+        "criterion": "An authorized Agent can identify the issue, Customer, status, and current owner together.",
+        "object": "object-1",
+        "screen": "screen-1-1"
+      },
+      {
+        "id": "G-02",
+        "title": "Make ownership explicit",
+        "criterion": "Assignment produces one visible responsible Agent or a clear unassigned state.",
+        "object": "object-3",
+        "screen": "screen-1-2"
+      },
+      {
+        "id": "G-03",
+        "title": "Communicate the next step",
+        "criterion": "An Agent can review the recipient and message; missing information produces an awaiting-customer state after successful sending.",
+        "object": "object-1",
+        "screen": "screen-2-2"
+      }
+    ],
+    "requirementDetails": [
+      {
+        "id": "R-01",
+        "statement": "Show customer context and current request status together.",
+        "acceptance": "Request review displays the issue, Customer identity, status, and permitted relevant history together.",
+        "goal": "G-01"
+      },
+      {
+        "id": "R-02",
+        "statement": "Make unassigned requests recognizable and show the responsible agent.",
+        "acceptance": "Unassigned Requests are labeled explicitly; assignment displays one responsible Agent and preserves the previous conversation.",
+        "goal": "G-02"
+      },
+      {
+        "id": "R-03",
+        "statement": "Show the recipient and message before a customer update is sent.",
+        "acceptance": "Before sending, show the recipient and full message; do not show success until delivery is accepted by the messaging service.",
+        "goal": "G-03"
+      },
+      {
+        "id": "R-04",
+        "statement": "When information is missing, specify what is needed and retain the conversation.",
+        "acceptance": "Request details specifies the needed information; after successful sending, set awaiting customer and retain the responsible Agent.",
+        "goal": "G-03"
+      }
+    ],
+    "edgeStates": [
+      {
+        "state": "Empty",
+        "trigger": "No requests match the active view",
+        "behavior": "Explain the empty result and offer clearing filters; distinguish it from failed loading."
+      },
+      {
+        "state": "Loading",
+        "trigger": "Request, assignment, or message operation is pending",
+        "behavior": "Keep context visible; mark the pending operation and prevent duplicate sends."
+      },
+      {
+        "state": "Error",
+        "trigger": "Assignment or message send fails",
+        "behavior": "Retain the chosen Agent or message draft. Preserve the prior status and do not report success; clarify whether retry is safe."
+      },
+      {
+        "state": "Permission denied",
+        "trigger": "An Agent cannot access or update a request",
+        "behavior": "Show a permission explanation without exposing restricted Customer details; provide a path to request access from the team lead."
+      }
+    ],
+    "openDecisions": [
+      {
+        "id": "Q-01",
+        "question": "Which roles can view customer contact information and history?",
+        "owner": "Support team lead"
+      },
+      {
+        "id": "Q-02",
+        "question": "How should urgent requests be identified and escalated?",
+        "owner": "Support team lead"
+      },
+      {
+        "id": "Q-03",
+        "question": "Which events should move a request out of awaiting customer?",
+        "owner": "Support team lead"
+      }
+    ],
+    "outOfScope": [
+      "Billing changes",
+      "Automated triage",
+      "Response-time commitments"
+    ]
+  }
+]

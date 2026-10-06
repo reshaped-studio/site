@@ -1,44 +1,42 @@
 name: Build and deploy to GitHub Pages
 
-# Deploy is manual until the agency site is ready to publish.
-# The Eleventy project in this repo is the pre-agency landing page.
-#
-# Assumptions:
-# - Pages is enabled in the repo settings with source = "GitHub Actions".
-# - PATH_PREFIX is "/" for reshaped.studio. Use "/site/" only for a
-#   project-page deploy at github.io/site/.
-
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
+  pages: read
 
-# Only one deploy at a time. New pushes cancel in-flight runs of older commits.
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
           cache: npm
-
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@v5
       - run: npm ci
-
+      - name: Check Design Plan interactions and content
+        run: npm run test:design-plans
       - name: Build site
         env:
-          PATH_PREFIX: "/"
+          PATH_PREFIX: ${{ steps.pages.outputs.base_path }}
+          SITE_URL: ${{ steps.pages.outputs.origin }}
         run: npm run build
-
+      - name: Verify links, assets, and plan structure
+        env:
+          PATH_PREFIX: ${{ steps.pages.outputs.base_path }}
+        run: python3 scripts/verify-plan-build.py _site "$PATH_PREFIX"
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
@@ -46,6 +44,9 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

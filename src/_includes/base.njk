@@ -53,6 +53,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ '/css/styles.css' | url }}">
+<link rel="stylesheet" href="{{ '/css/design-plans.css' | url }}">
+{% if pageClass == "page--landing" %}<link rel="stylesheet" href="{{ '/css/process-timeline.css' | url }}">{% endif %}
+{% if pageClass == "page--plan" %}<script src="{{ '/js/design-plans.js' | url }}" defer></script>{% endif %}
 </head>
 <body class="{{ pageClass }}">
 
@@ -78,7 +81,6 @@
            {% if item.key == navKey %}class="is-active" aria-current="page"{% endif %}>{{ item.label }}</a>
       {%- endfor %}
     </nav>
-    <span class="sheet__stamp">{{ sheetIndex or "01" }} / {{ site.publicPageCount }}</span>
     <div class="sheet__rule" role="presentation"></div>
   </header>
 
@@ -89,9 +91,8 @@
 
   {# ── CTA bar (full-bleed magenta, system-wide) ────────────────── #}
   <footer class="cta-bar">
-    <span class="cta-bar__sheet">{{ sheetIndex or "01" }} / {{ site.publicPageCount }}</span>
-    <span class="cta-bar__label">for: legacy systems &middot; internal tools &middot; public&#8209;sector interfaces</span>
-    <a href="{{ site.contactAnchor | url }}">tell us where it hurts</a>
+    <span class="cta-bar__label">product design &middot; structure &middot; direction</span>
+    <a href="{{ site.contactAnchor | url }}">start a conversation</a>
   </footer>
 
 </div>

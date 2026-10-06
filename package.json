@@ -7,7 +7,8 @@
     "build": "eleventy",
     "serve": "eleventy --serve",
     "debug": "DEBUG=Eleventy* eleventy",
-    "clean": "rm -rf _site"
+    "clean": "rm -rf _site",
+    "test:design-plans": "node --test scripts/design-plans.test.cjs"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0"

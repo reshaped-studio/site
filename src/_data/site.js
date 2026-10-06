@@ -7,12 +7,11 @@ module.exports = {
   brandmark: "reshaped",
 
   // Canonical site URL — used in OG/Twitter meta tags and canonical link.
-  // Update when the deploy domain is finalized (currently a placeholder
-  // for the GH Pages project page).
-  url: "https://reshaped.example",
+  // Pages supplies its origin at build time, including a future custom domain.
+  url: process.env.SITE_URL || "https://reshaped-studio.github.io",
 
   // Default OG/Twitter description used when a page doesn't override it.
-  description: "End-to-end design and build for complex, ambiguous, or overgrown products. Public services. Internal tools. Legacy systems.",
+  description: "ReShaped is a product design studio. We map how your product works and turn that structure into a Design Plan your team can build from.",
 
   // Default OG image (1200x630). Per-page overrides via front-matter.
   ogImage: "/img/og-image.png",
@@ -26,10 +25,10 @@ module.exports = {
   // The two anchor items (work, contact) never become page-active and have
   // no period color; they are in-page anchors on the landing.
   nav: [
-    { label: "landing",      url: "/",              key: "landing",      period: "magenta" },
+    { label: "home",      url: "/",              key: "landing",      period: "magenta" },
     { label: "how we work",  url: "/how-we-work/",  key: "how-we-work",  period: "cyan"    },
     { label: "about",        url: "/about/",        key: "about",        period: "lime"    },
-    { label: "work",         url: "/#section-c",    key: "work-anchor"   },
+    { label: "Design Plans", url: "/#design-plans",    key: "work-anchor"   },
     { label: "contact",      url: "/#section-d",    key: "contact-anchor"},
   ],
 
@@ -47,7 +46,7 @@ module.exports = {
   ],
 
   // Total page count used in sheet stamps ("01 / 04").
-  publicPageCount: 4,
+  publicPageCount: 6,
 
   // Build date for footer/colophon if needed.
   buildDate: new Date().toISOString().slice(0, 10),

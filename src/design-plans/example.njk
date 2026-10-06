@@ -1,0 +1,64 @@
+---
+pagination:
+  data: designPlans
+  size: 1
+  alias: plan
+permalink: "/design-plans/{{ plan.slug }}/"
+pageClass: page--plan
+navKey: design-plan-example
+eleventyComputed:
+  title: "{{ plan.name }} · Example Design Plan · ReShaped"
+  description: "{{ plan.summary }} An illustrative Design Plan with object guides and annotated user flows."
+  sheetIndex: "{{ plan.sheetIndex }}"
+eleventyExcludeFromCollections: true
+---
+{% extends "plan-base.njk" %}
+{% block content %}
+<article class="plan-page">
+  <header class="plan-hero">
+    <h1>{{ plan.name }}<br><span class="document-title">design plan.</span></h1>
+    <p class="plan-lede">{{ plan.summary }}</p><dl class="document-metadata"><div><dt>Prepared by</dt><dd>{{ plan.document.preparedBy }}</dd></div><div><dt>Version / date</dt><dd>{{ plan.document.version }} · {{ plan.document.date }}</dd></div><div><dt>Review status</dt><dd>{{ plan.document.status }}</dd></div></dl><aside class="review-decision"><h2>The decision for review</h2><p>{{ plan.document.decision }}</p><span>Review owner: {{ plan.document.reviewOwner }}</span></aside>
+  </header>
+  <nav class="plan-sections" aria-label="Design Plan sections">
+    <a href="#context">Context &amp; opportunity</a><a href="#goals">Goals</a><a href="#insights">Design decisions</a><a href="#objects">Objects</a><a href="#flows">User flows</a><a href="#summary">Requirements</a><a href="#decisions">Open decisions</a>
+  </nav>
+  <section class="plan-section" id="context" aria-labelledby="context-heading">
+    <h2 id="context-heading">context and opportunity.</h2>
+    <div class="plan-context-grid"><div><h3>The situation</h3><p>{{ plan.context }}</p></div><div><h3>Who it serves</h3><p>{{ plan.audience }}</p><h3>The scope</h3><p>{{ plan.scope }}</p></div></div>
+    <div id="opportunity"><h3 id="opportunity-heading">The opportunity</h3>
+    <p class="plan-statement">{{ plan.opportunity }}</p></div>
+  </section>
+  <section class="plan-section" id="goals" aria-labelledby="goals-heading"><h2 id="goals-heading">goals and acceptance criteria.</h2><div class="document-table-wrap"><table class="document-table"><thead><tr><th scope="col">Goal</th><th scope="col">What must be true</th><th scope="col">Design reference</th></tr></thead><tbody>{% for goal in plan.goals %}<tr id="{{ goal.id }}"><th scope="row"><span>{{ goal.id }}</span>{{ goal.title }}</th><td>{{ goal.criterion }}</td><td><a href="#{{ goal.object }}">Object guide</a><br><a href="#{{ goal.screen }}">Wireframe</a></td></tr>{% endfor %}</tbody></table></div></section>
+  <section class="plan-section" id="insights" aria-labelledby="insights-heading">
+    <h2 id="insights-heading">what shapes the design.</h2>
+    <ol class="plan-insights">{% for insight in plan.insights %}<li><span class="plan-assumption">{{ insight.label }}</span><h3>{{ insight.observation }}</h3><p><strong>Design decision</strong> {{ insight.decision }}</p></li>{% endfor %}</ol>
+  </section>
+  <section class="plan-section" id="objects" aria-labelledby="objects-heading">
+    <h2 id="objects-heading">the objects behind the screens.</h2>
+    {% for relationship in plan.relations %}<div class="plan-relationship" aria-label="Object relationships"><strong>{{ relationship[0] }}</strong><span>{{ relationship[1] }} →</span><strong>{{ relationship[2] }}</strong><span>{{ relationship[3] }} →</span><strong>{{ relationship[4] }}</strong></div>{% endfor %}
+    <div class="object-guides" data-object-guides>
+      <div class="object-tabs" hidden aria-label="Object guides">{% for object in plan.objects %}<button type="button" id="tab-{{ loop.index }}" aria-controls="object-{{ loop.index }}">{{ object.name }}</button>{% endfor %}</div>
+      {% for object in plan.objects %}
+      <section class="object-guide" id="object-{{ loop.index }}" aria-labelledby="object-heading-{{ loop.index }}">
+        <header><h3 id="object-heading-{{ loop.index }}">{{ object.name }}</h3><p>{{ object.definition }}</p><span class="plan-example-instance">Example: {{ object.instance }}</span></header>
+        <div class="object-guide-grid"><div><h4>Information</h4><dl class="object-attributes">{% for attr in object.attributes %}<div><dt>{{ attr.name }}</dt><dd>{{ attr.description }}</dd></div>{% endfor %}</dl></div><div><h4>Relationships</h4><ul>{% for item in object.relationships %}<li>{{ item }}</li>{% endfor %}</ul><h4>Actions</h4><ul>{% for item in object.actions %}<li>{{ item }}</li>{% endfor %}</ul><h4>Rules</h4><ul>{% for item in object.rules %}<li>{{ item }}</li>{% endfor %}</ul><h4>Important states</h4><ul>{% for item in object.states %}<li>{{ item }}</li>{% endfor %}</ul></div></div>
+      </section>{% endfor %}
+    </div>
+  </section>
+  <section class="plan-section" id="flows" aria-labelledby="flows-heading">
+    <h2 id="flows-heading">journeys and wireframes.</h2>
+    {% for flow in plan.flows %}{% set flowIndex = loop.index %}
+    <section class="plan-flow" aria-labelledby="flow-{{ flowIndex }}"><header><span class="plan-eyebrow">{% if loop.first %}MAIN TASK{% else %}ALTERNATE PATH{% endif %}</span><h3 id="flow-{{ flowIndex }}">{{ flow.name }}</h3><p>{{ flow.description }}</p></header>
+      <ol class="plan-flow-steps">{% for step in flow.steps %}<li id="screen-{{ flowIndex }}-{{ loop.index }}">
+        <span class="flow-number" aria-hidden="true">{{ loop.index }}</span>
+        <div class="flow-explanation"><h4>{{ step.title }}</h4><p>{{ step.task }}</p><p><strong>Why this screen</strong> {{ step.rationale }}</p><p class="flow-annotation">{{ step.annotation }}</p></div>
+        <figure class="flow-wireframe"><img src="{{ step.image | url }}" width="800" height="620" loading="lazy" alt="{{ step.alt | escape }}"><button type="button" class="enlarge-wireframe" hidden data-enlarge data-image="{{ step.image | url }}" data-alt="{{ step.alt | escape }}" data-title="{{ step.title | escape }}" data-description="{{ (step.task + " " + step.rationale + " " + step.annotation) | escape }}">Enlarge wireframe<span class="visually-hidden">: {{ flow.name }} — {{ step.title }}</span> ↗</button></figure>
+      </li>{% endfor %}</ol>
+    </section>{% endfor %}
+  </section>
+  <section class="plan-section" id="edge-states" aria-labelledby="edges-heading"><h2 id="edges-heading">edge states.</h2><div class="document-table-wrap"><table class="document-table"><thead><tr><th scope="col">State</th><th scope="col">When it occurs</th><th scope="col">Required behavior</th></tr></thead><tbody>{% for state in plan.edgeStates %}<tr><th scope="row">{{ state.state }}</th><td>{{ state.trigger }}</td><td>{{ state.behavior }}</td></tr>{% endfor %}</tbody></table></div></section>
+  <section class="plan-section" id="summary" aria-labelledby="summary-heading"><h2 id="summary-heading">requirements.</h2><ol class="deliverable-requirements">{% for requirement in plan.requirementDetails %}<li id="{{ requirement.id }}"><span class="plan-assumption">{{ requirement.id }} · MUST</span><h3>{{ requirement.statement }}</h3><p><strong>Acceptance criterion</strong> {{ requirement.acceptance }}</p><a href="#{{ requirement.goal }}">Supports {{ requirement.goal }}</a></li>{% endfor %}</ol><h3>Out of scope</h3><ul>{% for item in plan.outOfScope %}<li>{{ item }}</li>{% endfor %}</ul></section>
+  <section class="plan-section" id="decisions" aria-labelledby="decisions-heading"><h2 id="decisions-heading">decisions to resolve.</h2><p>Resolve these before agreeing the production scope.</p><ol class="open-decisions">{% for decision in plan.openDecisions %}<li><span class="plan-assumption">{{ decision.id }} · OPEN</span><h3>{{ decision.question }}</h3><p>Owner: {{ decision.owner }}</p></li>{% endfor %}</ol><h3>Validation</h3><p>{{ plan.success }}</p><ul class="deliverable-validation">{% for item in plan.validation %}<li>{{ item }}</li>{% endfor %}</ul></section>
+</article>
+<dialog class="wireframe-dialog" aria-labelledby="wireframe-dialog-title" aria-describedby="wireframe-dialog-description"><div class="wireframe-dialog-head"><h2 id="wireframe-dialog-title">Wireframe</h2><button type="button" data-close-dialog autofocus>Close ×</button></div><img width="800" height="620" alt=""><p id="wireframe-dialog-description"></p></dialog>
+{% endblock %}

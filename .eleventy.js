@@ -11,6 +11,7 @@
 
 module.exports = function (eleventyConfig) {
   // Static assets passed through verbatim.
+  eleventyConfig.addPassthroughCopy({ "src/js": "js" });
   eleventyConfig.addPassthroughCopy({ "src/css": "css" });
   eleventyConfig.addPassthroughCopy({ "src/img": "img" });
   // Brand-mark assets (favicon family) sit at the site root.
